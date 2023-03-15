@@ -1,0 +1,80 @@
+
+h1 {
+    font-size: 64px;
+    letter-spacing: 0.25px; 
+    word-spacing: 1px;
+    font-weight: 700;
+    z-index: 5;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+h4 {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.sub-heading {
+    font-size: 30px;
+    font-weight: 200;
+    letter-spacing: 0.05px;
+    word-spacing: 0.05px;
+    text-align: center;
+}
+
+.medium-paragraph {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+@media only screen and (max-width: 1200px) {
+    h1 {
+        font-size: 60px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    h1 {
+        font-size: 56px;
+    }
+
+    .sub-heading {
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+
+    h1 {
+        font-size: 52px;
+    }
+
+    .sub-heading {
+        font-size: 22px;
+    }
+
+    h1, .sub-heading {
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    
+    h1 {
+        font-size: 48px;
+    }
+
+    .sub-heading {
+        font-size: 20px;
+    }
+
+}
+
+@media only screen and (max-width: 400px) {
+
+    .sub-heading {
+        font-size: 18px;
+    }
+
+}
