@@ -12,7 +12,7 @@ const Hero = ({ active, setActive }) => {
         <section className="flex-center relative">
             <div className="auto-height flex-center flex-column margin-vertical-50">
                 <div className="width-75">
-                    <h1>Manage all of your tasks,without the fuss</h1>
+                    <h1>Manage all of your tasks, without the fuss</h1>
                     <p className="sub-heading">Track, view and manage your tasks, all in one simple interface. No more complicated setup, just add tasks and go.</p>
                 </div>
 
