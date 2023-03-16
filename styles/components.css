@@ -87,6 +87,29 @@
     color: var(--black);
 }
 
+.dashboard-selector {
+    height: 36px;
+    width: 125px;
+    text-decoration: none;
+    border-radius: 10px;
+    color: var(--off-black);
+}
+
+.active {
+    background-color: var(--green);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    font-weight: bold;
+}
+
+.card {
+    background-color: var(--off-white);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--off-black);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 8px;
+}
+
 
 @media only screen and (max-width: 800px) {
     .hero-bubble-1 {

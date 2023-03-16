@@ -1,4 +1,8 @@
 
+.red {
+    background-color: red;
+}
+
 .auto-height {
     height: auto;
 }
@@ -105,6 +109,10 @@
 
 .margin-right-10 {
     margin-right: 10px;
+}
+
+.text-left {
+    text-align: left;
 }
 
 @media only screen and (max-width: 1200px) {
