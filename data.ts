@@ -2,6 +2,7 @@ import { Task } from "./types/dataSchema";
 
 export const data: Task[] = [
     {
+        id: "123",
         userId: "12345",
         title: "Example task",
         description: "Blablablablabla",
@@ -15,7 +16,8 @@ export const data: Task[] = [
         createdDate: "03/03/2023",
         completedDate: null
     },
-    {
+    {   
+        id: "456",
         userId: "54321",
         title: "Task",
         description: "Blablablablabla",
@@ -30,6 +32,7 @@ export const data: Task[] = [
         completedDate: null
     },
     {
+        id: "789",
         userId: "12345",
         title: "Example task",
         description: "Blablablablabla",
@@ -44,6 +47,7 @@ export const data: Task[] = [
         completedDate: null
     },
     {
+        id: "101",
         userId: "12345",
         title: "Example task",
         description: "Blablablablabla",
@@ -58,6 +62,7 @@ export const data: Task[] = [
         completedDate: null
     },
     {
+        id: "102",
         userId: "12345",
         title: "Example task",
         description: "Blablablablabla",

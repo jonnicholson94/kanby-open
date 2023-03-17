@@ -7,7 +7,7 @@ const Card = () => {
             <div className="height-45 width-90 flex-center margin-vertical-10">
                 <h2 className="width-100">Example title</h2>
             </div>
-            <div className="height-45 width-90 flex-around margin-vertical-10 red">
+            <div className="height-45 width-90 flex-around margin-vertical-10">
                 <div className="">
                     <p>Category</p>
                 </div>
