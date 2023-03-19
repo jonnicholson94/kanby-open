@@ -8,7 +8,7 @@ const ResetPassword = ({ onClick }) => {
         <form className="auth-form auto-height width-50 margin-vertical-50 flex-center flex-column">
             <AuthHeading content="Reset your Kanby password" />
             <AuthLabel htmlFor="email" content="Email" />
-            <AuthInput name="email" id="email" type="email" />
+            <AuthInput name="email" id="email" type="email" placeholder="Enter your email" />
             <AuthButton content="Send reset email" />
             <p className="auth-link width-80 margin-vertical-30" onClick={() => onClick('sign-in')}>Back to sign in</p>
         </form>
