@@ -24,3 +24,15 @@ export type IndividualTask = {
     status: string,
     createdDate: string
 }
+
+export type Status = "Backlog" | "In progress" | "Paused" | "Completed"
+
+export type Category = "General" | "Work" | "Life" | "Health" | "Learning"
+
+export enum CategoryColour {
+    GENERAL = "var(--purple)",
+    WORK = "var(--blue)",
+    LIFE = "var(--green)",
+    HEALTH = "var(--salmon)",
+    LEARNING = "var(--grey)"
+}

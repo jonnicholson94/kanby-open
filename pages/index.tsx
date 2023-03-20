@@ -22,7 +22,7 @@ const HomePage = () => {
         </title>
       </Helmet>
 
-      <GlobalHeader />
+      <GlobalHeader url="/dashboard" link="Dashboard" />
       <Hero active={active} setActive={setActive} />
       <InfoSection 
         iconBackground='var(--purple)'
