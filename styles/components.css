@@ -140,10 +140,11 @@
 }
 
 .dashboard-selected {
-    height: 80px;
+    height: 50px;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
     background-color: var(--white);
+    border-radius: 5px;
 }
 
 .dashboard-selected:hover {
@@ -179,10 +180,55 @@
     background-color: var(--white);
     border: 2px solid var(--border);
     font-size: 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .active-status {
     background-color: var(--purple);
+    color: var(--white);
+}
+
+.sub-task {
+    border: 2px solid var(--border);
+    border-radius: 5px;
+}
+
+.add-task {
+    height: 50px;
+    border: 1px solid var(--border);
+    background-color: var(--white);
+    border-radius: 5px;
+}
+
+.task-input {
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+.task-button {
+    background-color: var(--purple);
+    color: var(--white);
+    font-weight: bold;
+}
+
+.title-input {
+    height: 50px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+.dashboard-button {
+    height: 50px;
+    border-radius: 5px;
+    background-color: var(--purple);
+    font-size: 20px;
+    font-weight: bold;
     color: var(--white);
 }
 

@@ -1,33 +1,43 @@
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
+import { useState } from "react"
 
-import { calculateColour } from "../lib/calculateColour"
 import DashboardFormLabel from "./DashboardFormLabel"
+import CategoryButton from "./CategoryButton"
 
-const DashboardCategory = () => {
+import { Category } from "../types/dataSchema"
+
+type Props = {
+    state: Category,
+    setState: React.Dispatch<React.SetStateAction<Category>>
+}
+
+const DashboardCategory = ({ state, setState }: Props) => {
+
+    const [active, setActive] = useState(false)
+
+    const toggleActive = () => {
+        setActive(!active)
+    }
+
+    const handleClick = (category) => {
+        setState(category)
+        setActive(false)
+    }
+
     return (
         <>
             <DashboardFormLabel label="Category" />
             <div className="dashboard-select-container width-100 margin-vertical-10">
-                <button className="dashboard-selected width-100 flex-center">
-                    <div className="height-100 width-47 flex-start">
-                        <span className="category-span margin-right-10" style={{backgroundColor: calculateColour("Life")}}></span>
-                        <p>Life</p>
-                    </div>
-                    <div className="height-100 width-47 flex-end">
-                        <FontAwesomeIcon icon={faChevronDown} />
-                    </div>
-                </button>
+                <CategoryButton category={state} selected={true} onClick={toggleActive} />
+
+                { active ?
                 <div className="auto-height width-100 flex-center flex-column">
-                    <button className="dashboard-selected dropdown width-100 flex-center">
-                        <div className="flex-start width-47">
-                            <span className="category-span margin-right-10" style={{backgroundColor: calculateColour("Learning")}}></span>
-                            <p>Learning</p>
-                        </div>
-                        <div className="width-47"></div>
-                    </button>
-                </div>
+                    <CategoryButton category="General" selected={false} onClick={handleClick} />
+                    <CategoryButton category="Health" selected={false} onClick={handleClick} />
+                    <CategoryButton category="Learning" selected={false} onClick={handleClick} />
+                    <CategoryButton category="Life" selected={false} onClick={handleClick} />
+                    <CategoryButton category="Work" selected={false} onClick={handleClick} />
+                </div> : null }
             </div>
             </>
     )
