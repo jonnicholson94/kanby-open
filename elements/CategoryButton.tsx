@@ -15,10 +15,10 @@ const CategoryButton = ({ category, selected, onClick }: Props) => {
     return (
         <div className="dashboard-selected width-100 flex-center" onClick={() => onClick(category)}>
             <div className="height-100 width-47 flex-start">
-                <span className="category-span margin-right-10" style={{backgroundColor: calculateColour(category)}}></span>
+                <span className="category-span margin-right-10 margin-left-10" style={{backgroundColor: calculateColour(category)}}></span>
                 <p>{category}</p>
             </div>
-            <div className="height-100 width-47 flex-end">
+            <div className="height-100 width-47 flex-end margin-right-10">
                 { !selected ? null : <FontAwesomeIcon icon={faChevronDown} /> }
             </div>
         </div>

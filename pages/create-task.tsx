@@ -1,7 +1,7 @@
 
 import { useState } from "react"
 
-import { Status, Category } from "../types/dataSchema"
+import { Status, Category, SubTask } from "../types/dataSchema"
 
 import DashboardContainer from "../components/DashboardContainer"
 import DashboardForm from "../components/DashboardForm"
@@ -21,17 +21,18 @@ const CreateTask = () => {
     const [status, setStatus] = useState<Status>("Backlog")
     const [category, setCategory] = useState<Category>("General")
     const [date, setDate] = useState<string>("")
+    const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
 
     return (
         <DashboardContainer>
-            <DashboardBackButton />
+            <DashboardBackButton showSaveButton={false} />
             <DashboardForm>
                 <DashboardTitle state={title} setState={setTitle} />
                 <DashboardTextarea state={description} setState={setDescription} />
                 <DashboardStatus state={status} setState={setStatus} />
                 <DashboardCategory state={category} setState={setCategory} />
                 <DashboardDateInput state={date} setState={setDate} />
-                <DashboardSubTasks />
+                <DashboardSubTasks state={subTasks} setState={setSubTasks} />
                 
                 <DashboardButton content="Create task" />
             </DashboardForm>

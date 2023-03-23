@@ -25,6 +25,11 @@ export type IndividualTask = {
     createdDate: string
 }
 
+export type SubTask = {
+    title: string,
+    status: boolean
+}
+
 export type Status = "Backlog" | "In progress" | "Paused" | "Completed"
 
 export type Category = "General" | "Work" | "Life" | "Health" | "Learning"

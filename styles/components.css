@@ -171,8 +171,8 @@
     border: 1px solid var(--border);
     background-color: var(--white);
     border-radius: 5px;
-    padding: 15px;
-    font-size: 24px
+    padding: 10px 10px;
+    font-size: 20px
 }
 
 .status-button {
@@ -213,6 +213,8 @@
     background-color: var(--purple);
     color: var(--white);
     font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .title-input {
@@ -232,9 +234,85 @@
     color: var(--white);
 }
 
+.save-button {
+    height: 50px;
+    width: 150px;
+    background-color: var(--purple);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.comment-date {
+    font-size: 12px; 
+    margin-bottom: 5px;
+    font-weight: 200;
+    color: var(--off-black);
+}
+
+.comment {
+    font-size: 20px;
+}
+
+.comment-textarea {
+    height: 75px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: var(--white);
+    border-radius: 5px;
+    border-color: var(--border);
+    margin-top: 20px;
+}
+
+.comment-button {
+    height: 50px;
+    background-color: var(--purple);
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--white);
+}
+
+.dashboard-divider {
+    height: 1px;
+    background-color: var(--border);
+}
+
+@media only screen and (max-width: 1000px) {
+    .view-task-container {
+        flex-direction: column;
+    }
+
+    .view-task-left, .view-task-right {
+        width: 100%;
+    }
+
+    .view-task-right {
+        margin-top: 30px;
+    }
+}
+
 @media only screen and (max-width: 800px) {
     .hero-bubble-1 {
         bottom: 5%;
         right: 2.5%;
+    }
+
+    .task-input {
+        width: 70%;
+    }
+
+    .task-button {
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .status-container {
+        flex-direction: column;
+    }
+
+    .status-button {
+        width: 100%;
     }
 }
