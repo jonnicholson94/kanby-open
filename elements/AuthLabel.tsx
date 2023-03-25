@@ -6,7 +6,7 @@ type Props = {
 
 const AuthLabel = ({ htmlFor, content }: Props) => {
     return (
-        <label className="auth-label auto-height width-80" htmlFor={htmlFor}>{content}</label>
+        <label className="auth-label auto-height width-80 margin-top-20" htmlFor={htmlFor}>{content}</label>
     )
 }
 

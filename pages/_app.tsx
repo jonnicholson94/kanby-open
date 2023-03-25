@@ -1,6 +1,7 @@
 
 import { Roboto } from 'next/font/google'
 
+import '../styles/animations.css'
 import '../styles/common.css'
 import '../styles/components.css'
 import '../styles/global.css'
@@ -13,9 +14,9 @@ const roboto = Roboto({
 
 const MyApp = ({ Component, pageProps }) => {
     return (
-        <main className={roboto.className}>
-            <Component {...pageProps} />
-        </main>
+            <main className={roboto.className}>
+                <Component {...pageProps} />
+            </main>
     )
 }
 

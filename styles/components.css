@@ -1,4 +1,36 @@
 
+.error-message, .success-message {
+    background-color: var(--white);
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.error-message {
+    border: 2px solid var(--error);
+}
+
+.success-message {
+    border: 2px solid var(--success);
+}
+
+.error-icon, .success-icon {
+    height: 20px;
+    width: 20px;
+}
+
+.error-icon, .error-paragraph {
+    color: var(--error);
+}
+
+.success-icon, .success-paragraph {
+    color: var(--success);
+}
+
+.error-paragraph, .success-paragraph {
+    font-size: 16px;
+    font-weight: 500;
+}
+
 .hero-bubble-1 {
     height: 350px;
     width: 350px;
@@ -45,7 +77,7 @@
 }
 
 .auth-input {
-    margin: 10px 0 30px 0;
+    margin: 10px 0 10px 0;
     border: 1.5px solid var(--border);
     padding: 0 10px;
     font-size: 1rem;
@@ -53,6 +85,15 @@
 
 .auth-input::placeholder {
     color: var(--border);
+}
+
+.input-error {
+    color: var(--error);
+    font-weight: bold;
+}
+
+.error-border {
+    border: 1px solid var(--error);
 }
 
 .auth-button, .cta-button {
@@ -81,6 +122,15 @@
 
 .auth-link:hover {
     text-decoration: underline;
+}
+
+.spinner {
+    height: 15px;
+    width: 15px;
+    animation-name: rotate;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
 }
 
 .footer {

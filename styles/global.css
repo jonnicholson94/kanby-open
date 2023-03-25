@@ -19,6 +19,8 @@
     --active-border: #907fa4;
     --black: #000;
     --off-black: #363636;
+    --error: #EF4B4B;
+    --success: #539165;
 }
 
 body {
@@ -35,6 +37,10 @@ button {
     cursor: pointer;
     border: none;
     border-radius: 5px;
+}
+
+button:disabled {
+    opacity: 0.7;
 }
 
 a {

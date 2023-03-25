@@ -1,11 +1,15 @@
+import Spinner from "./Spinner"
 
 type Props = {
-    content: string
+    content: string,
+    pending: boolean,
 }
 
-const AuthButton = ({ content }: Props) => {
+const AuthButton = ({ content, pending }: Props) => {
     return (
-        <button className="auth-button height-50 width-80 margin-vertical-30" type="submit">{content}</button>
+        <button className="auth-button height-50 width-80 margin-vertical-30" type="submit">
+            { pending ? <Spinner /> : <p>{content}</p> }
+        </button>
     )
 }
 
