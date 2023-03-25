@@ -3,6 +3,9 @@ import { useState } from "react"
 
 import { Status, Category, SubTask } from "../types/dataSchema"
 
+import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
+import { useRouter } from "next/router"
+
 import DashboardContainer from "../components/DashboardContainer"
 import DashboardForm from "../components/DashboardForm"
 import DashboardSubTasks from "../components/DashboardSubTasks"
@@ -13,6 +16,7 @@ import DashboardCategory from "../elements/DashboardCategory"
 import DashboardDateInput from "../elements/DashboardDateInput"
 import DashboardStatus from "../elements/DashboardStatus"
 import DashboardTextarea from "../elements/DashboardTextarea"
+import Spinner from "../elements/Spinner"
 
 const CreateTask = () => {
 
@@ -22,6 +26,22 @@ const CreateTask = () => {
     const [category, setCategory] = useState<Category>("General")
     const [date, setDate] = useState<string>("")
     const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
+
+    const { isLoading } = useSessionContext()
+    const user = useUser()
+    const router = useRouter()
+
+    if (isLoading) {
+        return (
+            <div>
+                <Spinner />
+            </div>
+        )
+    }
+
+    if (!user) {
+        router.push("/")
+    }
 
     return (
         <DashboardContainer>

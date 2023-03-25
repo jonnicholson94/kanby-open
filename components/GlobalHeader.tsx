@@ -2,6 +2,8 @@
 import Link from "next/link"
 import { Anton } from "next/font/google"
 
+import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
+
 const anton = Anton({
     weight: '400',
     subsets: ['latin']
@@ -13,6 +15,14 @@ type Props = {
 }
 
 const GlobalHeader = ({ url, link }: Props) => {
+
+    const user = useUser()
+    const { isLoading } = useSessionContext()
+
+    if (isLoading) {
+        return 
+    }
+
     return (
         <header className="auto-height flex-center">
             <nav className="height-100 width-90 flex-around margin-vertical-30">
@@ -20,7 +30,7 @@ const GlobalHeader = ({ url, link }: Props) => {
                     <Link className={`${anton.className} head-link`} href="/">Kanby</Link>
                 </div>
                 <div className="width-47 flex-end">
-                    <Link className="cta-button height-50 flex-center" href={url}>{link}</Link>
+                    { user ? <Link className="cta-button height-50 flex-center" href={url}>{link}</Link> : null }
                 </div>
             </nav>
         </header>

@@ -1,6 +1,9 @@
 
 import { useState } from "react"
 
+import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
+import { useRouter } from "next/router"
+
 import DashboardContainer from "../components/DashboardContainer"
 import DashboardTitle from "../components/DashboardTitle"
 import DashboardDivider from "../elements/DashboardDivider"
@@ -22,6 +25,18 @@ const ViewTask = () => {
     const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
     const [category, setCategory] = useState<Category>("General")
     const [date, setDate] = useState<string>("")
+
+    const { isLoading } = useSessionContext()
+    const user = useUser()
+    const router = useRouter()
+
+    if (isLoading) {
+        return
+    }
+
+    if (!user) {
+        router.push("/")
+    }
 
     return (
         <DashboardContainer>
