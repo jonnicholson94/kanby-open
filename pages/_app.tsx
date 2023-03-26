@@ -4,6 +4,9 @@ import { supabase } from '../lib/supabase/supabaseClient'
 
 import { useState } from 'react'
 
+import { Provider } from 'react-redux'
+import store from '../features/store'
+
 import { Roboto } from 'next/font/google'
 
 import '../styles/animations.css'
@@ -27,9 +30,11 @@ const MyApp = ({ Component, pageProps }) => {
     
     return (
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
-            <main className={roboto.className}>
-                <Component {...pageProps} />
-            </main>
+            <Provider store={store}>
+                <main className={roboto.className}>
+                    <Component {...pageProps} />
+                </main>
+            </Provider>
         </SessionContextProvider>
     )
 }

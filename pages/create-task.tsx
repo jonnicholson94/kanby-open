@@ -6,6 +6,8 @@ import { Status, Category, SubTask } from "../types/dataSchema"
 import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
 import { useRouter } from "next/router"
 
+import { useAddNewTaskMutation } from "../features/apiSlice"
+
 import DashboardContainer from "../components/DashboardContainer"
 import DashboardForm from "../components/DashboardForm"
 import DashboardSubTasks from "../components/DashboardSubTasks"
@@ -24,12 +26,16 @@ const CreateTask = () => {
     const [description, setDescription] = useState<string>("")
     const [status, setStatus] = useState<Status>("Backlog")
     const [category, setCategory] = useState<Category>("General")
-    const [date, setDate] = useState<string>("")
+    const [date, setDate] = useState<string>()
     const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
+
+    const [pending, setPending] = useState<boolean>(false)
 
     const { isLoading } = useSessionContext()
     const user = useUser()
     const router = useRouter()
+
+    const [addNewTask] = useAddNewTaskMutation()
 
     if (isLoading) {
         return (
@@ -43,10 +49,45 @@ const CreateTask = () => {
         router.push("/")
     }
 
+    const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+
+        e.preventDefault()
+        setPending(true)
+        
+            try {
+            
+                const response = await addNewTask({
+                        user_id: user.id,
+                        title: title,
+                        description: description,
+                        status: status,
+                        category: category,
+                        due_date: date,
+                        sub_tasks: subTasks,
+                        comments: []
+                    }).unwrap()
+                
+                if (response === 200) {
+                    router.push("dashboard")
+                }
+
+                if (response === 400) {
+                    console.log("There was an error");
+                    setPending(false)
+                    
+                }
+               
+            } catch (error) {
+                console.log(error);
+                console.log("Caught an error")
+                setPending(false)
+            }
+        }
+
     return (
         <DashboardContainer>
             <DashboardBackButton showSaveButton={false} />
-            <DashboardForm>
+            <DashboardForm handleSubmit={handleSubmit}>
                 <DashboardTitle state={title} setState={setTitle} />
                 <DashboardTextarea state={description} setState={setDescription} />
                 <DashboardStatus state={status} setState={setStatus} />
@@ -54,7 +95,7 @@ const CreateTask = () => {
                 <DashboardDateInput state={date} setState={setDate} />
                 <DashboardSubTasks state={subTasks} setState={setSubTasks} />
                 
-                <DashboardButton content="Create task" />
+                <DashboardButton content="Create task" pending={pending} />
             </DashboardForm>
         </DashboardContainer>
     )

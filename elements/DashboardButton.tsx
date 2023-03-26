@@ -1,11 +1,16 @@
 
+import Spinner from "./Spinner"
+
 type Props = {
-    content: string
+    content: string,
+    pending: boolean
 }
 
-const DashboardButton = ({ content }: Props) => {
+const DashboardButton = ({ content, pending }: Props) => {
     return (
-        <button className="dashboard-button width-100 margin-vertical-30">{content}</button>
+        <button className="dashboard-button width-100 margin-vertical-30" disabled={pending}>
+            { pending ? <Spinner /> : content }
+        </button>
     )
 }
 
