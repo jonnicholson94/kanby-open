@@ -18,7 +18,7 @@ import DashboardCategory from "../elements/DashboardCategory"
 import DashboardDateInput from "../elements/DashboardDateInput"
 import DashboardStatus from "../elements/DashboardStatus"
 import DashboardTextarea from "../elements/DashboardTextarea"
-import Spinner from "../elements/Spinner"
+import SplashScreen from "../components/SplashScreen"
 
 const CreateTask = () => {
 
@@ -38,11 +38,7 @@ const CreateTask = () => {
     const [addNewTask] = useAddNewTaskMutation()
 
     if (isLoading) {
-        return (
-            <div>
-                <Spinner />
-            </div>
-        )
+        return <SplashScreen />
     }
 
     if (!user) {

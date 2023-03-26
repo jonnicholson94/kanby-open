@@ -1,4 +1,9 @@
 
+.splash-screen {
+    height: 100vh;
+    width: 100vw;
+}
+
 .error-message, .success-message {
     background-color: var(--white);
     border-radius: 5px;

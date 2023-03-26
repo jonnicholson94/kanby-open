@@ -9,6 +9,7 @@ import DashboardContainer from "../components/DashboardContainer"
 import DashboardSelector from "../components/DashboardSelector"
 import GlobalHeader from "../components/GlobalHeader"
 import Spinner from "../elements/Spinner"
+import SplashScreen from "../components/SplashScreen"
 
 const Completed = () => {
 
@@ -17,11 +18,7 @@ const Completed = () => {
     const router = useRouter()
 
     if (isLoading) {
-        return (
-            <div>
-                <Spinner />
-            </div>
-        )
+        return <SplashScreen />
     }
 
     if (!user) {
@@ -29,14 +26,9 @@ const Completed = () => {
     }
 
     const { data, isFetching, error } = useFetchTasksQuery(user.id)
-    
 
     if (isFetching) {
-        return (
-        <div className="height-100 width-100 flex-center">
-            <Spinner />
-        </div>
-        )
+        return <SplashScreen />
     }
 
     if (data) {

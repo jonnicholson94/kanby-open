@@ -8,7 +8,7 @@ import DashboardContainer from "../components/DashboardContainer"
 import DashboardSelector from "../components/DashboardSelector"
 import GlobalHeader from "../components/GlobalHeader"
 import DashboardCardContainer from "../components/DashboardCardContainer"
-import Spinner from "../elements/Spinner"
+import SplashScreen from "../components/SplashScreen"
 
 const Dashboard = () => {
 
@@ -17,7 +17,7 @@ const Dashboard = () => {
     const router = useRouter()
 
     if (isLoading) {
-        return
+        return <SplashScreen />
     }
 
     if (!user) {
@@ -28,11 +28,7 @@ const Dashboard = () => {
     
 
     if (isFetching) {
-        return (
-        <div className="height-100 width-100 flex-center">
-            <Spinner />
-        </div>
-        )
+        return <SplashScreen />
     }
 
     if (data) {

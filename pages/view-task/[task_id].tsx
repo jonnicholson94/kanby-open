@@ -16,9 +16,9 @@ import DashboardStatus from "../../elements/DashboardStatus"
 import DashboardSubTasks from "../../components/DashboardSubTasks"
 import DashboardCategory from "../../elements/DashboardCategory"
 import DashboardDateInput from "../../elements/DashboardDateInput"
-import Spinner from "../../elements/Spinner"
 
 import { Category, Status, SubTask } from "../../types/dataSchema"
+import SplashScreen from "../../components/SplashScreen"
 
 
 const ViewTask = () => {
@@ -29,9 +29,7 @@ const ViewTask = () => {
 
     const { task_id } = router.query
 
-    console.log(task_id);
-
-    const { data, isFetching, error } = useFetchSingleTaskQuery(task_id)
+    const { data, isFetching } = useFetchSingleTaskQuery(task_id)
 
     const [title, setTitle] = useState<string>()
     const [description, setDescription] = useState<string>("")
@@ -51,16 +49,16 @@ const ViewTask = () => {
         }
     }, [data])
 
-        if (isLoading) {
-            return <Spinner />
+    if (isLoading) {
+        return <SplashScreen />
+    }
+
+        if (isFetching) {
+            return <SplashScreen />
         }
     
         if (!user) {
             router.push("/")
-        }
-    
-        if (isFetching) {
-            return <Spinner />
         }
         
         return (
