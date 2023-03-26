@@ -10,7 +10,7 @@ import { filteredData } from "../lib/filteredData"
 
 type Props = {
     status: Status,
-    data: Task[]
+    data
 }
 
 const DashboardCardContainer = ({ status, data }: Props) => {
@@ -24,10 +24,13 @@ const DashboardCardContainer = ({ status, data }: Props) => {
 
     return (
         <>
-        <DashboardHeading title={status} />
-        { cardList.map(x => {
-            return <DashboardCard id={x.id} title={x.title} category={x.category as Category} date={x.dueDate} />
-        })}
+            { cardList.length > 0 ?
+            <>
+            <DashboardHeading title={status} />
+            { cardList.map(x => {
+                return <DashboardCard id={x.id} title={x.title} category={x.category as Category} date={x.dueDate} />
+            })}
+            </> : null }
         </>
     )
 }

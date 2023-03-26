@@ -6,6 +6,26 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
     tagTypes: ['Tasks'],
     endpoints: builder => ({
+        fetchTasks: builder.query({
+            query: (user_id) => ({
+                url: `/fetchTasks`,
+                params: {
+                    user_id
+                }
+            }),
+            providesTags: ['Tasks'],
+            transformResponse: (response) => response
+        }),
+        fetchSingleTask: builder.query({
+            query: (task_id) => ({
+                url: `/fetchSingleTask`,
+                params: {
+                    task_id
+                }
+            }),
+            providesTags: ['Tasks'],
+            transformResponse: (response) => response
+        }),
         addNewTask: builder.mutation({
             query: body => ({
                 url: "/createTask",
@@ -18,6 +38,6 @@ export const apiSlice = createApi({
     })
 })
 
-export const { useAddNewTaskMutation } = apiSlice
+export const { useFetchTasksQuery, useFetchSingleTaskQuery, useAddNewTaskMutation } = apiSlice
 
 

@@ -13,10 +13,10 @@ type Props = {
     date: string
 }
 
-const DashboardCard = ({ title, category, date }: Props) => {
+const DashboardCard = ({ id, title, category, date }: Props) => {
 
     return (
-        <Link className="dashboard-card auto-height width-100 flex-center margin-vertical-10" href="/view-task">
+        <Link className="dashboard-card auto-height width-100 flex-center margin-vertical-10" href={`/view-task/${id}`}>
             <div className="auto-height width-47 flex-start">
                 <h3 className="margin-left-10">{title}</h3>
             </div>

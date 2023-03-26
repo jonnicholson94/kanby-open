@@ -2,8 +2,6 @@
 import express from "express"
 import { supabase } from "../../lib/supabase/supabaseClient"
 
-require("dotenv").config()
-
 const app = express()
 
 const handler = async (req, res) => {
