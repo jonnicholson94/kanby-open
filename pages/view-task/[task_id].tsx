@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
 import { useRouter } from "next/router"
 
-import { useFetchSingleTaskQuery } from "../../features/apiSlice"
+import { useFetchSingleTaskQuery, useSaveCommentMutation } from "../../features/apiSlice"
 
 import DashboardContainer from "../../components/DashboardContainer"
 import DashboardTitle from "../../components/DashboardTitle"
@@ -17,7 +17,7 @@ import DashboardSubTasks from "../../components/DashboardSubTasks"
 import DashboardCategory from "../../elements/DashboardCategory"
 import DashboardDateInput from "../../elements/DashboardDateInput"
 
-import { Category, Status, SubTask } from "../../types/dataSchema"
+import { TaskComment, Category, Status, SubTask } from "../../types/dataSchema"
 import SplashScreen from "../../components/SplashScreen"
 
 
@@ -37,6 +37,7 @@ const ViewTask = () => {
     const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
     const [category, setCategory] = useState<Category>("General")
     const [date, setDate] = useState<string>("")
+    const [comments, setComments] = useState<TaskComment[]>([])
 
     useEffect(() => {
         if (data) {
@@ -46,6 +47,8 @@ const ViewTask = () => {
             setSubTasks(data[0].sub_tasks)
             setCategory(data[0].category)
             setDate(data[0].due_date)
+            setComments(data[0].comments)
+            
         }
     }, [data])
 
@@ -61,6 +64,8 @@ const ViewTask = () => {
             router.push("/")
         }
         
+
+    if (data) {
         return (
             <DashboardContainer>
                 <DashboardBackButton showSaveButton={true} />
@@ -70,7 +75,7 @@ const ViewTask = () => {
                         <DashboardDivider />
                         <DashboardTextarea state={description} setState={setDescription} />
                         <DashboardDivider />
-                        <DashboardComments />
+                        <DashboardComments task_id={task_id} comments={comments} setComments={setComments} />
                     </div>
                     <div className="view-task-right auto-height width-35 flex-start flex-column">
                         <DashboardStatus state={status} setState={setStatus} />
@@ -85,7 +90,7 @@ const ViewTask = () => {
                 
             </DashboardContainer>
         )
-    // }
+    }
 }
 
 export default ViewTask

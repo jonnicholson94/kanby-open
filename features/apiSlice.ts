@@ -34,10 +34,21 @@ export const apiSlice = createApi({
             }),
             transformErrorResponse: (response: { status: string | number }, meta, arg) => response.status,
             invalidatesTags: ['Tasks']
+        }),
+        saveComment: builder.mutation({
+            query: (body) => {
+                return {
+                    url: '/addComment',
+                    method: 'put',
+                    body
+                }
+            },
+            transformErrorResponse: (response: { status: string | number }, meta, arg) => response.status,
+            invalidatesTags: ['Tasks']
         })
     })
 })
 
-export const { useFetchTasksQuery, useFetchSingleTaskQuery, useAddNewTaskMutation } = apiSlice
+export const { useFetchTasksQuery, useFetchSingleTaskQuery, useAddNewTaskMutation, useSaveCommentMutation } = apiSlice
 
 

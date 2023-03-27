@@ -1,6 +1,6 @@
 
 export type TaskComment = {
-    commentDate: string,
+    commentDate: number,
     comment: string
 }
 
