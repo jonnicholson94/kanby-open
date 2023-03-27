@@ -7,8 +7,6 @@ const app = express()
 const handler = async (req, res) => {
 
     const { user_id } = req.query
-
-    console.log(user_id);
     
 
     try {

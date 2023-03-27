@@ -8,7 +8,6 @@ import DashboardCardContainer from "../components/DashboardCardContainer"
 import DashboardContainer from "../components/DashboardContainer"
 import DashboardSelector from "../components/DashboardSelector"
 import GlobalHeader from "../components/GlobalHeader"
-import Spinner from "../elements/Spinner"
 import SplashScreen from "../components/SplashScreen"
 
 const Completed = () => {

@@ -15,7 +15,6 @@ const handler = async (req, res) => {
         const { data, error } = await supabase.from("tasks").update({ comments: comments }).eq( "id", task_id )
         
         if (error) {
-            console.log(comments);
             
             res.send(400)
         }
