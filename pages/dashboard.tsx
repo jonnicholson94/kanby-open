@@ -9,6 +9,7 @@ import DashboardSelector from "../components/DashboardSelector"
 import GlobalHeader from "../components/GlobalHeader"
 import DashboardCardContainer from "../components/DashboardCardContainer"
 import SplashScreen from "../components/SplashScreen"
+import PopupContainer from "../elements/PopupContainer"
 
 const Dashboard = () => {
 
@@ -41,6 +42,7 @@ const Dashboard = () => {
                     <DashboardCardContainer status="In progress" data={data} />
                     <DashboardCardContainer status="Paused" data={data} />
                 </DashboardContainer>
+                <PopupContainer />
             </>
         )
     }

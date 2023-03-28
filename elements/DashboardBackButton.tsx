@@ -3,11 +3,15 @@ import Link from "next/link"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLongArrowLeft } from "@fortawesome/free-solid-svg-icons"
 
+import Spinner from "./Spinner"
+
 type Props = {
-    showSaveButton: boolean
+    showSaveButton: boolean,
+    onClick?,
+    pending?
 }
 
-const DashboardBackButton = ({ showSaveButton }: Props) => {
+const DashboardBackButton = ({ showSaveButton, onClick, pending }: Props) => {
     return (
         <div className="auto-height width-100 flex-center">
             <div className="auto-height width-47 flex-start">
@@ -17,7 +21,9 @@ const DashboardBackButton = ({ showSaveButton }: Props) => {
                 </Link>
             </div>
             <div className="auto-height width-47 flex-end">
-                { showSaveButton === true ? <button className="save-button">Save</button> : null }
+                { showSaveButton === true ? <button className="save-button" onClick={onClick}>
+                    {pending ? <Spinner /> : "Save" }
+                </button> : null }
             </div>
         </div>
     )

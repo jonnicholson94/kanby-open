@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
-    tagTypes: ['Tasks'],
+    tagTypes: ['Tasks', 'IndividualTask'],
     endpoints: builder => ({
         fetchTasks: builder.query({
             query: (user_id) => ({
@@ -23,8 +23,19 @@ export const apiSlice = createApi({
                     task_id
                 }
             }),
-            providesTags: ['Tasks'],
+            providesTags: ['IndividualTask'],
             transformResponse: (response) => response
+        }),
+        updateTask: builder.mutation({
+            query: body => {
+                return {
+                    url: '/updateTask',
+                    method: 'PUT',
+                    body
+                }
+            },
+            transformErrorResponse: (response: { status: string | number }, meta, arg) => response.status,
+            invalidatesTags: ['IndividualTask', 'Tasks']
         }),
         addNewTask: builder.mutation({
             query: body => ({
@@ -44,11 +55,19 @@ export const apiSlice = createApi({
                 }
             },
             transformErrorResponse: (response: { status: string | number }, meta, arg) => response.status,
-            invalidatesTags: ['Tasks']
+        }),
+        addSubTask: builder.mutation({
+            query: (body) => {
+                return {
+                    url: '/addSubTask',
+                    method: 'PUT',
+                    body
+                }
+            }
         })
     })
 })
 
-export const { useFetchTasksQuery, useFetchSingleTaskQuery, useAddNewTaskMutation, useSaveCommentMutation } = apiSlice
+export const { useFetchTasksQuery, useFetchSingleTaskQuery, useUpdateTaskMutation, useAddNewTaskMutation, useSaveCommentMutation, useAddSubTaskMutation } = apiSlice
 
 

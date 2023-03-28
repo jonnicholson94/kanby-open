@@ -4,6 +4,22 @@
     width: 100vw;
 }
 
+.popup-container {
+    width: 40%;
+    background-color: var(--white);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    position: fixed;
+    right: 10px;
+    bottom: -250px;
+    bottom: 10px;
+    z-index: 10;
+    animation-name: popIn;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
 .error-message, .success-message {
     background-color: var(--white);
     border-radius: 5px;
@@ -334,6 +350,11 @@
 }
 
 @media only screen and (max-width: 1000px) {
+
+    .popup-container {
+        width: 70%;
+    }
+
     .view-task-container {
         flex-direction: column;
     }
@@ -348,6 +369,12 @@
 }
 
 @media only screen and (max-width: 800px) {
+
+    .popup-container {
+        width: 90%;
+        left: 5%;
+        right: 5%;
+    }
     .hero-bubble-1 {
         bottom: 5%;
         right: 2.5%;
@@ -359,15 +386,5 @@
 
     .task-button {
         width: 30%;
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    .status-container {
-        flex-direction: column;
-    }
-
-    .status-button {
-        width: 100%;
     }
 }

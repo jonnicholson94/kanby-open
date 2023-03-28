@@ -6,3 +6,17 @@
     75% { transform: rotate(270deg) }
     100% {transform: rotate(360deg) }
 }
+
+@keyframes popIn {
+    0% { bottom: -250px }
+    10% { bottom: 10px }
+    20% { bottom: 10px }
+    30% { bottom: 10px }
+    40% { bottom: 10px }
+    50% { bottom: 10px }
+    60% { bottom: 10px }
+    70% { bottom: 10px }
+    80% { bottom: 10px }
+    90% { bottom: 10px }
+    100% { bottom: -250px }
+}

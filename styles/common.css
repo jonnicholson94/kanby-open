@@ -3,6 +3,10 @@
     background-color: red;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .auto-height {
     height: auto;
 }

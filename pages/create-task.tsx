@@ -1,6 +1,9 @@
 
 import { useState } from "react"
 
+import { displayStatus, hideStatus } from "../features/statusSlice"
+import { useAppDispatch } from "../lib/reduxHelpers"
+
 import { Status, Category, SubTask } from "../types/dataSchema"
 
 import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
@@ -30,6 +33,8 @@ const CreateTask = () => {
     const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
 
     const [pending, setPending] = useState<boolean>(false)
+
+    const dispatch = useAppDispatch()
 
     const { isLoading } = useSessionContext()
     const user = useUser()
@@ -65,11 +70,24 @@ const CreateTask = () => {
                 
                 if (response === 200) {
                     router.push("dashboard")
+                    setTimeout(() => dispatch(displayStatus({
+                        payloadMessage: "Successfully created your task",
+                        payloadType: "success"
+                     })), 500)
+                 
+                     setTimeout(() => dispatch(hideStatus()), 5000)
                 }
 
                 if (response === 400) {
                     console.log("There was an error");
                     setPending(false)
+
+                    setTimeout(() => dispatch(displayStatus({
+                        payloadMessage: "Failed to create your task",
+                        payloadType: "error"
+                     })), 2000)
+                 
+                     setTimeout(() => dispatch(hideStatus()), 5000)
                     
                 }
                

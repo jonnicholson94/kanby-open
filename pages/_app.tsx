@@ -5,7 +5,7 @@ import { supabase } from '../lib/supabase/supabaseClient'
 import { useState } from 'react'
 
 import { Provider } from 'react-redux'
-import store from '../features/store'
+import { store } from '../features/store'
 
 import { Roboto } from 'next/font/google'
 
