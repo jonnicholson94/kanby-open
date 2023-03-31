@@ -170,7 +170,7 @@ const ViewTask = () => {
                     </div>
                 </div>
             <PopupContainer />
-            { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id /> : null }
+            { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id type="view" /> : null }
             </DashboardContainer>
         )
     }

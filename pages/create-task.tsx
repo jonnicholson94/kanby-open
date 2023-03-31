@@ -115,7 +115,7 @@ const CreateTask = () => {
                         <DashboardDateInput state={date} setState={setDate} />
                     </div>
                 </div>
-                { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} /> : null }
+                { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id="" type="create" /> : null }
             </DashboardContainer>
     )
 }

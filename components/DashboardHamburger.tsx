@@ -12,7 +12,17 @@ import { useDeleteTaskMutation } from "../features/apiSlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
-const DashboardHamburger = ({ setShow, status, setStatus, category, setCategory, task_id }) => {
+type Props = {
+    setShow,
+    status,
+    setStatus,
+    category, 
+    setCategory,
+    task_id?,
+    type?
+}
+
+const DashboardHamburger = ({ setShow, status, setStatus, category, setCategory, task_id, type }) => {
 
     const router = useRouter()
     const dispatch = useAppDispatch()
@@ -46,10 +56,11 @@ const DashboardHamburger = ({ setShow, status, setStatus, category, setCategory,
             <div className="dashboard-hamburger-blocker" onClick={() => setShow(false)}></div>
             <div className="dashboard-hamburger width-80 flex-start flex-column relative">
                 <div className="auto-height width-80 flex-start margin-vertical-30">
+                    { type === "create" ? null :
                     <AlertPopup title="Are you sure you want to delete this task?" description="Once you do, you won't be able to get it back." onClick={handleTaskDelete}>
                         <FontAwesomeIcon icon={faTrash} />
-                    </AlertPopup>
-                        </div>
+                    </AlertPopup> }
+                </div>
                 <DashboardStatus state={status} setState={setStatus} />
                 <DashboardCategory state={category} setState={setCategory} />
             </div>
