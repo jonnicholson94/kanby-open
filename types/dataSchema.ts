@@ -9,7 +9,7 @@ export type Task = {
     userId: string,
     title: string,
     description: string,
-    dueDate: string,
+    due_date: string,
     category: string,
     comments: TaskComment[],
     status: string,

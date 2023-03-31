@@ -22,13 +22,18 @@ const DashboardCardContainer = ({ status, data }: Props) => {
         () => filteredData(status, data), [status, data]
     )
 
+    console.log(data);
+    
+
     return (
         <>
             { cardList.length > 0 ?
             <>
             <DashboardHeading title={status} />
             { cardList.map(x => {
-                return <DashboardCard id={x.id} title={x.title} category={x.category as Category} date={x.dueDate} />
+                console.log(x.due_date);
+                
+                return <DashboardCard id={x.id} title={x.title} category={x.category as Category} date={x.due_date} />
             })}
             </> : null }
         </>

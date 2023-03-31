@@ -37,6 +37,15 @@ export const apiSlice = createApi({
             transformErrorResponse: (response: { status: string | number }, meta, arg) => response.status,
             invalidatesTags: ['IndividualTask', 'Tasks']
         }),
+        deleteTask: builder.mutation({
+            query: body => ({
+                url: "/deleteTask",
+                method: "DELETE",
+                body
+            }),
+            transformErrorResponse: (response: { status: string | number }, meta, arg) => response.status,
+            invalidatesTags: ['Tasks']
+        }),
         addNewTask: builder.mutation({
             query: body => ({
                 url: "/createTask",
@@ -68,6 +77,6 @@ export const apiSlice = createApi({
     })
 })
 
-export const { useFetchTasksQuery, useFetchSingleTaskQuery, useUpdateTaskMutation, useAddNewTaskMutation, useSaveCommentMutation, useAddSubTaskMutation } = apiSlice
+export const { useFetchTasksQuery, useFetchSingleTaskQuery, useUpdateTaskMutation, useDeleteTaskMutation, useAddNewTaskMutation, useSaveCommentMutation, useAddSubTaskMutation } = apiSlice
 
 

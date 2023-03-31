@@ -21,12 +21,13 @@ const DashboardCard = ({ id, title, category, date }: Props) => {
                 <p className="margin-left-20">{title}</p>
             </div>
             <div className="auto-height width-47 flex-end">
-                <div className="auto-height margin-right-30 flex-center">
+                
+                <div className="auto-height flex-center margin-right-30">
+                    <p>{date === null ? "" : moment(date).format("DD MMM")}</p>
+                </div>
+                <div className="auto-height margin-right-20 flex-center">
                     <span className="category-span margin-right-10 flex-center" style={{backgroundColor: calculateColour(category)}}></span>
                     <p>{category}</p>
-                </div>
-                <div className="auto-height flex-center margin-right-20">
-                    <p>{moment(date).format("DD MMM")}</p>
                 </div>
             </div>
         </Link>

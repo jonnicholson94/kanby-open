@@ -6,7 +6,10 @@ import { useAppDispatch } from "../../lib/reduxHelpers"
 import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
 import { useRouter } from "next/router"
 
-import { useFetchSingleTaskQuery, useUpdateTaskMutation } from "../../features/apiSlice"
+import { useFetchSingleTaskQuery, useUpdateTaskMutation, useDeleteTaskMutation } from "../../features/apiSlice"
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 import DashboardContainer from "../../components/DashboardContainer"
 import DashboardTitle from "../../components/DashboardTitle"
@@ -22,6 +25,7 @@ import { TaskComment, Category, Status, SubTask } from "../../types/dataSchema"
 import SplashScreen from "../../components/SplashScreen"
 import PopupContainer from "../../elements/PopupContainer"
 import DashboardHamburger from "../../components/DashboardHamburger"
+import AlertPopup from "../../elements/AlertPopup"
 
 
 const ViewTask = () => {
@@ -36,6 +40,7 @@ const ViewTask = () => {
 
     const { data, isFetching } = useFetchSingleTaskQuery(task_id)
     const [updateTask] = useUpdateTaskMutation()
+    const [deleteTask] = useDeleteTaskMutation()
 
     const [title, setTitle] = useState<string>()
     const [description, setDescription] = useState<string>("")
@@ -99,6 +104,39 @@ const ViewTask = () => {
 
     }
 
+    const handleTaskDelete = async () => {
+
+        try {
+            const response = await deleteTask({
+                task_id
+            })
+
+            if (response) {
+                
+                dispatch(displayStatus({
+                    payloadMessage: "Successfully updated your task",
+                    payloadType: "success"
+                 }))
+             
+                 setTimeout(() => dispatch(hideStatus()), 5000)
+    
+                console.log(response);
+
+                router.push("/dashboard")
+            }
+
+        } catch (error) {
+            console.log(error);
+            dispatch(displayStatus({
+                payloadMessage: error,
+                payloadType: "error"
+             }))
+         
+             setTimeout(() => dispatch(hideStatus()), 5000)
+            
+        }
+    }
+
     if (isLoading) {
         return <SplashScreen />
     }
@@ -120,6 +158,11 @@ const ViewTask = () => {
                         <DashboardComments task_id={task_id} comments={comments} setComments={setComments} />
                     </div>
                     <div className="view-task-right auto-height width-35 flex-start flex-column relative">
+                        <div className="auto-height width-80 flex-start margin-vertical-30">
+                            <AlertPopup title="Are you sure you want to delete this task?" description="Once you do, you won't be able to get it back." onClick={handleTaskDelete}>
+                                <FontAwesomeIcon icon={faTrash} />
+                            </AlertPopup>
+                        </div>
                         <DashboardStatus state={status} setState={setStatus} />
                         
                         <DashboardCategory state={category} setState={setCategory} />
@@ -127,7 +170,7 @@ const ViewTask = () => {
                     </div>
                 </div>
             <PopupContainer />
-            { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} /> : null }
+            { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id /> : null }
             </DashboardContainer>
         )
     }
