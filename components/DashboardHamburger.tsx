@@ -28,6 +28,8 @@ const DashboardHamburger = ({ setShow, status, setStatus, category, setCategory,
     const dispatch = useAppDispatch()
     const [deleteTask] = useDeleteTaskMutation()
 
+    console.log(task_id)
+
     const handleTaskDelete = async () => {
 
         try {
@@ -37,6 +39,15 @@ const DashboardHamburger = ({ setShow, status, setStatus, category, setCategory,
 
             if (response) {
                 router.push("/dashboard")
+
+                console.log(response)
+
+                dispatch(displayStatus({
+                    payloadMessage: "Successfully deleted your task",
+                    payloadType: "success"
+                 }))
+             
+                 setTimeout(() => dispatch(hideStatus()), 5000)
             }
 
         } catch (error) {
