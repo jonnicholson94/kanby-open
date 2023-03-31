@@ -126,8 +126,8 @@
 .auth-button, .cta-button {
     font-size: 1.2rem;
     font-weight: 500;
-    background-color: var(--purple);
-    color: var(--off-white);
+    background-color: var(--primary-cta);
+    color: var(--cta-font);
 }
 
 .cta-button {
@@ -143,7 +143,7 @@
 }
 
 .auth-link {
-    color: var(--purple);
+    color: var(--primary-cta);
     cursor: pointer;
 }
 
