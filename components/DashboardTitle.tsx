@@ -1,4 +1,3 @@
-import DashboardFormLabel from "../elements/DashboardFormLabel"
 
 type Props = {
     state: string,
@@ -14,10 +13,7 @@ const DashboardTitle = ({ state, setState }: Props) => {
     }
 
     return (
-        <>
-            <DashboardFormLabel label="Title" />
-            <input className="title-input width-100 margin-vertical-10" type="text" value={state} onChange={handleChange} />
-        </>
+        <input className="dashboard-input title width-95 margin-top-30" type="text" value={state} onChange={handleChange} placeholder="Enter a title" />
     )
 }
 

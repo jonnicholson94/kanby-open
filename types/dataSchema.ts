@@ -38,6 +38,6 @@ export enum CategoryColour {
     GENERAL = "var(--purple)",
     WORK = "var(--blue)",
     LIFE = "var(--green)",
-    HEALTH = "var(--salmon)",
+    HEALTH = "var(--light-pink)",
     LEARNING = "var(--grey)"
 }

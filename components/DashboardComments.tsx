@@ -34,7 +34,7 @@ const DashboardComments = ({ task_id, comments, setComments }) => {
 
         const commentsArrayToPush = [...comments, commentToAdd]
 
-        setComments([...comments, commentToAdd])
+        
 
         // try / catch to push new variable to database
 
@@ -45,6 +45,7 @@ const DashboardComments = ({ task_id, comments, setComments }) => {
             })
 
             setPending(false)
+            setComments([...comments, commentToAdd])
             
         } catch(error) {
             console.log(error);
@@ -56,14 +57,17 @@ const DashboardComments = ({ task_id, comments, setComments }) => {
                         <DashboardFormLabel label="Comments" />
                         { comments.length > 0 && comments.map(x => {
                             return (
-                                <div className="auto-height width-100 flex-column margin-vertical-10">
+                                <div className="auto-height width-95 flex-column margin-top-20">
                                     <p className="comment-date">{moment(x.commentDate).format("DD MMM YYYY")}</p>
-                                    <p className="comment">{x.comment}</p>
+                                    <p className="comment margin-top-10">{x.comment}</p>
                                 </div>
                             )
                         })}
-                        <textarea className="comment-textarea width-100" placeholder="Add comment" value={comment} onChange={handleChange} />
-                        <button className="comment-button width-100 margin-vertical-10" onClick={saveComments}>{ pending ? <Spinner /> : "Save comment" }</button>
+                        <textarea className="comment-textarea width-95" placeholder="Add comment" value={comment} onChange={handleChange} />
+                        <div className="auto-height width-95 flex-end">
+                            <button className="action-button margin-vertical-10" onClick={saveComments}>{ pending ? <Spinner /> : "Save comment" }</button>
+                        </div>
+                        
                     </>
     )
 }

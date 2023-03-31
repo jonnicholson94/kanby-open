@@ -5,8 +5,8 @@ type Props = {
 
 const DashboardHeading = ({ title }: Props) => {
     return (
-        <div className="auto-height width-100 flex-center">
-            <h2 className="width-95 margin-vertical-10">{title}</h2>
+        <div className="dashboard-heading auto-height width-100 flex-center">
+            <h5 className="width-95 margin-vertical-10 margin-left-20">{title}</h5>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import DashboardFormLabel from "./DashboardFormLabel"
+import * as Select from '@radix-ui/react-select';
 
 import { Status } from "../types/dataSchema"
 
@@ -9,22 +9,38 @@ type Props = {
 
 const DashboardStatus = ({ state, setState }: Props) => {
 
-    const handleClick = (value: Status) => {
+    const handleClick = (value) => {
 
         setState(value)
 
     }
 
     return (
-        <>
-            <DashboardFormLabel label="Status" />
-            <div className="status-container width-100 auto-height flex-column margin-vertical-10">
-                <div className={state === "Backlog" ? "status-button active-status width-100 flex-center margin-vertical-10" : "status-button width-100 flex-center margin-vertical-10"} onClick={() => handleClick("Backlog")}>Backlog</div>
-                <div className={state === "In progress" ? "status-button active-status width-100 flex-center margin-vertical-10" : "status-button width-100 flex-center margin-vertical-10"} onClick={() => handleClick("In progress")}>In progress</div>
-                <div className={state === "Paused" ? "status-button active-status width-100 flex-center margin-vertical-10" : "status-button width-100 flex-center margin-vertical-10"} onClick={() => handleClick("Paused")}>Paused</div>
-                <div className={state === "Completed" ? "status-button active-status width-100 flex-center margin-vertical-10" : "status-button width-100 flex-center margin-vertical-10"} onClick={() => handleClick("Completed")}>Completed</div>
+        <div className="auto-height width-80 flex-around margin-top-20 ">
+            <div className="auto-height width-47 flex-start">
+                <label className="width-100">Status</label>
             </div>
-        </>
+            <div className="auto-height width-47 flex-start">
+                <Select.Root onValueChange={handleClick}>
+                    <Select.Trigger className="status-trigger width-100 flex-start">
+                        <Select.Value>{state}</Select.Value>
+                    </Select.Trigger>
+                
+                        <Select.Portal>
+                            <Select.Content className="status-portal" position={'popper'}>
+                                <Select.Viewport className="status-view height-100 flex-center flex-column">
+                                    <Select.Group className="height-90 width-90 flex-center flex-column margin-vertical-20">
+                                        <Select.SelectItem className="status-select flex-start width-100" value="Backlog">Backlog</Select.SelectItem>
+                                        <Select.SelectItem className="status-select flex-start width-100" value="In progress">In progress</Select.SelectItem>
+                                        <Select.SelectItem className="status-select flex-start width-100" value="Paused">Paused</Select.SelectItem>
+                                        <Select.SelectItem className="status-select flex-start width-100" value="Completed">Completed</Select.SelectItem>
+                                    </Select.Group>
+                                </Select.Viewport>
+                            </Select.Content>
+                        </Select.Portal>
+                </Select.Root>
+            </div>
+        </div>
     )
 }
 

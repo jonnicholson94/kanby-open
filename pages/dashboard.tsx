@@ -1,4 +1,6 @@
 
+import { useState } from "react"
+
 import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
 import { useRouter } from "next/router"
 
@@ -25,27 +27,31 @@ const Dashboard = () => {
         return router.push("/")
     }
 
-    const { data, isFetching, error } = useFetchTasksQuery(user.id)
-    
+    const { data, isFetching } = useFetchTasksQuery(user.id)
+    const [status, setStatus] = useState<boolean>(true)
 
     if (isFetching) {
         return <SplashScreen />
     }
 
-    if (data) {
-        return (
+    return (
             <>
                 <GlobalHeader url="/create-task" link="Create task" />
-                <DashboardSelector />
+                <DashboardSelector state={status} setState={setStatus} />
                 <DashboardContainer>
-                    <DashboardCardContainer status="Backlog" data={data} />
-                    <DashboardCardContainer status="In progress" data={data} />
-                    <DashboardCardContainer status="Paused" data={data} />
+                    { data < 1 ? <p className="width-80 flex-center margin-vertical-50">You haven't added any tasks yet.</p> : null }
+                    { status ?
+                     <>
+                        <DashboardCardContainer status="Backlog" data={data} />
+                        <DashboardCardContainer status="In progress" data={data} />
+                        <DashboardCardContainer status="Paused" data={data} />
+                    </> : 
+                    <DashboardCardContainer status="Completed" data={data} /> }
+                    
                 </DashboardContainer>
                 <PopupContainer />
             </>
         )
-    }
 }
 
 export default Dashboard

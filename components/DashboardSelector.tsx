@@ -3,18 +3,21 @@ import { useState, useEffect } from 'react'
 
 import DashboardSelectorToggle from "../elements/DashboardSelectorToggle"
 
-const DashboardSelector = () => {
-
-    const [active, setActive] = useState<string>('')
-
-    useEffect(() => {
-        setActive(window.location.pathname)
-    }, [])
+const DashboardSelector = ({ state, setState }) => {
     
     return (
-        <div className="auto-height width-100 flex-center">
-            <DashboardSelectorToggle active={active} href="/dashboard" content="Dashboard" />
-            <DashboardSelectorToggle active={active} href="/completed" content="Completed" />
+        <div className="auto-height width-100 flex-center border-separator">
+            <div className="auto-height width-80 flex-start margin-vertical-20">
+                { state ?
+                <>
+                    <DashboardSelectorToggle active={true} content="Active" onClick={() => setState(true)} /> 
+                    <DashboardSelectorToggle active={false} content="Completed" onClick={() => setState(false)} />
+                </> :
+                <>
+                    <DashboardSelectorToggle active={false} content="Active" onClick={() => setState(true)} /> 
+                    <DashboardSelectorToggle active={true} content="Completed" onClick={() => setState(false)} />
+                </> }                
+            </div>
         </div>
     )
 }

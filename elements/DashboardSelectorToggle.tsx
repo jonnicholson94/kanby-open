@@ -1,15 +1,19 @@
 
-import Link from "next/link"
 
 type Props = {
-    active: string, 
-    href: string, 
-    content: string
+    active: boolean, 
+    content: string,
+    onClick
 }
 
-const DashboardSelectorToggle = ({ active, href, content }: Props) => {
+const DashboardSelectorToggle = ({ active, content, onClick }: Props) => {
+    
     return (
-        <Link className={`dashboard-selector flex-center ${active === href ? 'active' : null}`} href={href}>{content}</Link>
+        <button 
+            className={`dashboard-selector flex-center ${active ? 'active' : null}`}
+            onClick={onClick}>{
+                content}
+        </button>
     )
 }
 

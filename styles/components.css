@@ -52,6 +52,12 @@
     font-weight: 500;
 }
 
+.hamburger-toggle {
+    height: 25px;
+    width: 25px;
+    display: none;
+}
+
 .hero-bubble-1 {
     height: 350px;
     width: 350px;
@@ -170,7 +176,7 @@
 }
 
 .head-link {
-    font-size: 2rem;
+    font-size: 1.6rem;
     text-decoration: none;
     color: var(--black);
 }
@@ -178,23 +184,27 @@
 .dashboard-selector {
     height: 36px;
     width: 125px;
+    background-color: var(--white);
     text-decoration: none;
     border-radius: 10px;
     color: var(--off-black);
 }
 
 .active {
-    background-color: var(--white);
+    
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     font-weight: bold;
 }
 
+.dashboard-heading {
+    background-color: var(--secondary-bg);
+}
+
 .dashboard-card {
-    height: 60px;
+    height: 50px;
     color: var(--black);
     text-decoration: none;
-    background-color: var(--off-white);
-    border-radius: 10px;
+    border-bottom: 1px solid var(--secondary-bg);
 }
 
 .category-span {
@@ -246,6 +256,24 @@
     font-size: 20px
 }
 
+.dashboard-hamburger-blocker {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--primary-cta);
+    opacity: 0.7;
+}
+
+.dashboard-hamburger {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: var(--primary-bg);
+}
+
 .status-button {
     height: 45px;
     background-color: var(--white);
@@ -262,8 +290,16 @@
 }
 
 .sub-task {
-    border: 2px solid var(--border);
+    border: 1px solid var(--primary-bg);
     border-radius: 5px;
+}
+
+.sub-task:hover {
+    border: 1px solid var(--border);
+}
+
+.sub-task-check {
+    border-radius: 50%;
 }
 
 .add-task {
@@ -349,22 +385,72 @@
     background-color: var(--border);
 }
 
+.status-trigger {
+    height: 40px;
+    background-color: var(--primary-bg);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    border: 2px solid var(--primary-bg);
+}
+
+.status-trigger:hover {
+    border: 2px solid var(--border);
+}
+
+.status-fixer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.status-portal {
+    width: 200px;
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border);
+    z-index: 10;
+    border-radius: 8px;
+}
+
+.status-select {
+    height: 30px;
+    padding-left: 10px;
+    margin-top: 2.5px;
+    margin-bottom: 2.5px;
+    border-radius: 4px;
+}
+
+.status-select:hover {
+    background-color: var(--secondary-bg);
+}
+
+.view-task-left {
+    border-right: 1px solid var(--border);
+}
+
 @media only screen and (max-width: 1000px) {
 
     .popup-container {
         width: 70%;
     }
 
-    .view-task-container {
-        flex-direction: column;
+    .hamburger-toggle {
+        display: block;
     }
 
-    .view-task-left, .view-task-right {
-        width: 100%;
+    .view-task-container {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .view-task-left {
+        width: 95%;
+        border: none;
     }
 
     .view-task-right {
-        margin-top: 30px;
+        display: none;
     }
 }
 

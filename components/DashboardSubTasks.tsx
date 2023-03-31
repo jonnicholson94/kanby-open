@@ -28,7 +28,7 @@ const DashboardSubTasks = ({ state, setState, task_id }: Props) => {
         setPending(true)
 
         const tasksToSave = [...state, { title: individualTask, status: false }]
-        setState([...state, { title: individualTask, status: false }])
+        
         setIndividualTask("")
 
         try {
@@ -38,6 +38,7 @@ const DashboardSubTasks = ({ state, setState, task_id }: Props) => {
             })
 
             console.log(response);
+            setState([...state, { title: individualTask, status: false }])
             
         } catch (error) {
             console.log(error);
@@ -54,24 +55,26 @@ const DashboardSubTasks = ({ state, setState, task_id }: Props) => {
     return (
         <>
             <DashboardFormLabel label="Sub tasks" />
-            <div className="auto-height width-100 flex-center flex-column">
+            <div className="auto-height width-95 flex-center flex-column margin-vertical-10">
                 { state.map(x => {
                     return (
-                        <div className="sub-task auto-height width-100 flex-center margin-vertical-10" key={x.title} >
-                            <div className="auto-height width-10 flex-center margin-vertical-10">
+                        <div className="sub-task auto-height width-100 flex-center margin-top-10" key={x.title} >
+                            <div className="sub-task-check auto-height width-5 flex-center margin-vertical-10">
                                 <input type="checkbox" value={x.status} onChange={toggleStatus} />
                             </div>
-                            <div className="auto-height width-90 flex-start margin-vertical-10">
+                            <div className="auto-height width-95 flex-start margin-vertical-10">
                                 <p>{x.title}</p>
                             </div>
                         </div>
                     )
                 })}
                 
-                <div className="add-task auto-height width-100 flex-center margin-vertical-10">
-                    <input className="task-input height-100 width-80" type="text" value={individualTask} onChange={handleChange} />
-                    <div className="task-button height-100 width-20 flex-center" onClick={handleClick}>
-                        { pending ? <Spinner /> : "Add" }
+                <div className="auto-height width-100 flex-center flex-column margin-vertical-10">
+                    <input className="standard-input height-100 width-100" type="text" value={individualTask} onChange={handleChange} placeholder="Add sub-task" />
+                    <div className="auto-height width-100 flex-end">
+                        <div className="action-button height-100 flex-center margin-top-20" onClick={handleClick}>
+                            { pending ? <Spinner /> : "Add" }
+                        </div>
                     </div>
                 </div>
             </div>

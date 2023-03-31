@@ -5,7 +5,7 @@ type Props = {
 
 const DashboardFormLabel = ({ label }: Props) => {
     return (
-        <label className="width-100">{label}</label>
+        <label className="bold width-95 margin-top-30">{label}</label>
     )
 }
 

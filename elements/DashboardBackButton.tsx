@@ -1,29 +1,34 @@
 
 import Link from "next/link"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLongArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { faLongArrowLeft, faTrash, faSquareCaretLeft } from "@fortawesome/free-solid-svg-icons"
 
 import Spinner from "./Spinner"
 
 type Props = {
     showSaveButton: boolean,
     onClick?,
-    pending?
+    pending?,
+    showHamburger
 }
 
-const DashboardBackButton = ({ showSaveButton, onClick, pending }: Props) => {
+const DashboardBackButton = ({ showSaveButton, onClick, pending, showHamburger }: Props) => {
     return (
-        <div className="auto-height width-100 flex-center">
-            <div className="auto-height width-47 flex-start">
+        <div className="auto-height width-100 flex-center border-separator-bottom">
+            <div className="auto-height width-47 flex-start margin-vertical-20">
                 <Link className="auto-height flex-center" href="/dashboard">
-                    <FontAwesomeIcon className="margin-right-10 margin-left-10" icon={faLongArrowLeft} />
+                    <FontAwesomeIcon className="margin-right-10 margin-left-20" icon={faLongArrowLeft} />
                     <p>Go back</p>
                 </Link>
             </div>
             <div className="auto-height width-47 flex-end">
-                { showSaveButton === true ? <button className="save-button" onClick={onClick}>
+                {/* <FontAwesomeIcon className="margin-right-20" icon={faTrash} /> */}
+                
+                { showSaveButton === true ? <button className="action-button margin-left-10 margin-right-10" onClick={onClick}>
                     {pending ? <Spinner /> : "Save" }
                 </button> : null }
+                <FontAwesomeIcon className="hamburger-toggle margin-left-10 margin-right-10" icon={faSquareCaretLeft} onClick={() => showHamburger(true)} />
+                
             </div>
         </div>
     )

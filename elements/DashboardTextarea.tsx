@@ -1,6 +1,4 @@
 
-import DashboardFormLabel from "./DashboardFormLabel"
-
 type Props = {
     state: string,
     setState: React.Dispatch<React.SetStateAction<string>>
@@ -15,10 +13,7 @@ const DashboardTextarea = ({ state, setState }: Props) => {
     }
 
     return (
-        <>
-            <DashboardFormLabel label="Description" />
-            <textarea className="dashboard-textarea width-100 margin-vertical-10" value={state} onChange={handleChange} />
-        </>
+        <textarea className="dashboard-input description width-95 margin-vertical-10" value={state} onChange={handleChange} placeholder="Enter a description" />
     )
 }
 

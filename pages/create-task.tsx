@@ -12,16 +12,15 @@ import { useRouter } from "next/router"
 import { useAddNewTaskMutation } from "../features/apiSlice"
 
 import DashboardContainer from "../components/DashboardContainer"
-import DashboardForm from "../components/DashboardForm"
 import DashboardSubTasks from "../components/DashboardSubTasks"
 import DashboardTitle from "../components/DashboardTitle"
 import DashboardBackButton from "../elements/DashboardBackButton"
-import DashboardButton from "../elements/DashboardButton"
 import DashboardCategory from "../elements/DashboardCategory"
 import DashboardDateInput from "../elements/DashboardDateInput"
 import DashboardStatus from "../elements/DashboardStatus"
 import DashboardTextarea from "../elements/DashboardTextarea"
 import SplashScreen from "../components/SplashScreen"
+import DashboardHamburger from "../components/DashboardHamburger"
 
 const CreateTask = () => {
 
@@ -33,6 +32,8 @@ const CreateTask = () => {
     const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
 
     const [pending, setPending] = useState<boolean>(false)
+
+    const [show, setShow] = useState(false)
 
     const dispatch = useAppDispatch()
 
@@ -100,18 +101,22 @@ const CreateTask = () => {
 
     return (
         <DashboardContainer>
-            <DashboardBackButton showSaveButton={false} />
-            <DashboardForm handleSubmit={handleSubmit}>
-                <DashboardTitle state={title} setState={setTitle} />
-                <DashboardTextarea state={description} setState={setDescription} />
-                <DashboardStatus state={status} setState={setStatus} />
-                <DashboardCategory state={category} setState={setCategory} />
-                <DashboardDateInput state={date} setState={setDate} />
-                <DashboardSubTasks state={subTasks} setState={setSubTasks} />
-                
-                <DashboardButton content="Create task" pending={pending} />
-            </DashboardForm>
-        </DashboardContainer>
+                <DashboardBackButton showSaveButton={true} onClick={handleSubmit} pending={pending} showHamburger={setShow} />
+                <div className="view-task-container auto-height width-100 flex-around-start">
+                    <div className="view-task-left width-65 flex-center flex-column">
+                        <DashboardTitle state={title} setState={setTitle} />
+                        <DashboardTextarea state={description} setState={setDescription} />
+                        <DashboardSubTasks state={subTasks} setState={setSubTasks} />
+                    </div>
+                    <div className="view-task-right auto-height width-35 flex-start flex-column relative">
+                        <DashboardStatus state={status} setState={setStatus} />
+                        
+                        <DashboardCategory state={category} setState={setCategory} />
+                        <DashboardDateInput state={date} setState={setDate} />
+                    </div>
+                </div>
+                { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} /> : null }
+            </DashboardContainer>
     )
 }
 

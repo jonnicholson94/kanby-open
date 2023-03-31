@@ -7,35 +7,100 @@
 }
 
 :root {
-    --primary-bg: #f8f5f1;
+    --primary-bg: #fff;
+    --secondary-bg: #f6f6f6;
+    --tertiary-bg: #F8F9F6;
+    --primary-cta: #000;
+    --border: #ededed;
+    --active-border: #2161DC;
+    --error: #C52828;
+    --success: #008000;
+    --dark-font: #000;
+    --cta-font: #fff;
+    --light-font: #fff;
+    --placeholder: #cdcdcd;
     --purple: #a58faa;
     --blue: #a6d6d6;
     --green: #d5ecc2;
-    --salmon: #fcd1d1;
+    --light-pink: #fcd1d1;
     --grey: #687980;
-    --white: #fff;
-    --off-white: #f9f9f9;
-    --border: #e2e2e2;
-    --active-border: #907fa4;
-    --black: #000;
-    --off-black: #363636;
-    --error: #EF4B4B;
-    --success: #539165;
 }
 
 body {
     background-color: var(--primary-bg);
 }
 
-input:focus, input:active, select:focus, select:active, textarea:focus, textarea:active, button:hover {
+input:focus, input:active, select:focus, select:active, textarea:focus, textarea:active {
     border: 1px solid var(--active-border);
     box-shadow: 0 0 3px var(--active-border);
     outline: none;
 }
 
+textarea {
+    min-height: 100px;
+    font-size: 14px;
+}
+
+textarea::placeholder {
+    color: var(--placeholder);
+    
+}
+
+.standard-input {
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.standard-input::placeholder {
+    color: var(--placeholder);
+}
+
+.dashboard-input {
+    min-height: 50px;
+    border: none;
+    padding-left: 10px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.description {
+    font-size: 20px;
+    padding-top: 10px;
+}
+
 button {
     cursor: pointer;
     border: none;
+    border-radius: 5px;
+}
+
+.date-input {
+    height: 30px;
+    border: none;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid var(--primary-bg);
+}
+
+.date-input:hover {
+    border: 2px solid var(--border);
+}
+
+.action-button {
+    height: 40px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: var(--primary-cta);
+    color: var(--cta-font);
+    cursor: pointer;
     border-radius: 5px;
 }
 
@@ -48,3 +113,11 @@ a {
     color: var(--black);
 }
 
+.border-separator {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.border-separator-bottom {
+    border-bottom: 1px solid var(--border);
+}

@@ -10,7 +10,6 @@ import { useFetchSingleTaskQuery, useUpdateTaskMutation } from "../../features/a
 
 import DashboardContainer from "../../components/DashboardContainer"
 import DashboardTitle from "../../components/DashboardTitle"
-import DashboardDivider from "../../elements/DashboardDivider"
 import DashboardBackButton from "../../elements/DashboardBackButton"
 import DashboardTextarea from "../../elements/DashboardTextarea"
 import DashboardComments from "../../components/DashboardComments"
@@ -22,6 +21,7 @@ import DashboardDateInput from "../../elements/DashboardDateInput"
 import { TaskComment, Category, Status, SubTask } from "../../types/dataSchema"
 import SplashScreen from "../../components/SplashScreen"
 import PopupContainer from "../../elements/PopupContainer"
+import DashboardHamburger from "../../components/DashboardHamburger"
 
 
 const ViewTask = () => {
@@ -46,6 +46,8 @@ const ViewTask = () => {
     const [comments, setComments] = useState<TaskComment[]>([])
 
     const [pending, setPending] = useState<boolean>(false)
+
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
         if (data) {
@@ -108,26 +110,23 @@ const ViewTask = () => {
     if (data || isFetching) {
         return (
             <DashboardContainer>
-                <DashboardBackButton showSaveButton={true} onClick={handleTaskUpdate} pending={pending} />
-                <div className="view-task-container auto-height width-100 flex-around-start margin-vertical-50">
-                    <div className="view-task-left width-55 flex-center-start flex-column">
+                <DashboardBackButton showSaveButton={true} onClick={handleTaskUpdate} pending={pending} showHamburger={setShow} />
+                <div className="view-task-container auto-height width-100 flex-around-start">
+                    <div className="view-task-left width-65 flex-center flex-column">
                         <DashboardTitle state={title} setState={setTitle} />
-                        <DashboardDivider />
                         <DashboardTextarea state={description} setState={setDescription} />
-                        <DashboardDivider />
+                        <DashboardSubTasks state={subTasks} setState={setSubTasks} task_id={task_id} />
                         <DashboardComments task_id={task_id} comments={comments} setComments={setComments} />
                     </div>
-                    <div className="view-task-right auto-height width-35 flex-start flex-column">
+                    <div className="view-task-right auto-height width-35 flex-start flex-column relative">
                         <DashboardStatus state={status} setState={setStatus} />
-                        <DashboardDivider />
-                        <DashboardSubTasks state={subTasks} setState={setSubTasks} task_id={task_id} />
-                        <DashboardDivider />
+                        
                         <DashboardCategory state={category} setState={setCategory} />
-                        <DashboardDivider />
                         <DashboardDateInput state={date} setState={setDate} />
                     </div>
                 </div>
             <PopupContainer />
+            { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} /> : null }
             </DashboardContainer>
         )
     }

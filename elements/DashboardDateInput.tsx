@@ -12,10 +12,15 @@ const DashboardDateInput = ({ state, setState }: Props) => {
     }
 
     return (
-        <>
-            <DashboardFormLabel label="Due date" />
-            <input className="date-input width-100 margin-vertical-10" type="date" value={state} onChange={handleChange} />
-        </>
+        <div className="auto-height width-80 flex-around margin-top-20 ">
+            <div className="auto-height width-47 flex-start">
+                <label className="width-100">Due date</label>
+            </div>
+            <div className="auto-height width-47 flex-start">
+                <input className="date-input width-100 margin-vertical-10" type="date" value={state} onChange={handleChange} />
+            </div>
+        </div>
+            
     )
 }
 

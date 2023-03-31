@@ -28,6 +28,14 @@ h4 {
     font-weight: 300;
 }
 
+.text-left {
+    text-align: left;
+}
+
+.bold {
+    font-weight: bold;
+}
+
 @media only screen and (max-width: 1200px) {
     h1 {
         font-size: 60px;
