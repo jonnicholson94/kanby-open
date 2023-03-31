@@ -72,6 +72,7 @@ const ViewTask = () => {
                 title,
                 description,
                 status,
+                category: category,
                 due_date: date
             })
 
