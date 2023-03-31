@@ -494,4 +494,9 @@
     .task-button {
         width: 30%;
     }
+
+    .alert-popup-content {
+        width: 90%;
+        left: 5%;
+    }
 }

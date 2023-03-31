@@ -21,8 +21,6 @@ const DashboardCardContainer = ({ status, data }: Props) => {
     const cardList = useMemo(
         () => filteredData(status, data), [status, data]
     )
-
-    console.log(data);
     
 
     return (
