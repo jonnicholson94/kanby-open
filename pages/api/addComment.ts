@@ -10,8 +10,6 @@ const handler = async (req, res) => {
     const { comments } = req.body
     const { task_id } = req.body
 
-    console.log(comments)
-
     try {
 
         const { data, error } = await supabase.from("tasks").update({ comments: comments }).eq( "id", task_id )

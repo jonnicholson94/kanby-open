@@ -29,14 +29,13 @@ const DashboardComments = ({ task_id, comments, setComments }) => {
 
         const commentToAdd = {
             comment: comment,
-            commentDate: new Date().toLocaleDateString()
+            commentDate: new Date().toDateString()
         }
 
         console.log(commentToAdd);
         
 
         const commentsArrayToPush = [...comments, commentToAdd]
-
         
 
         // // try / catch to push new variable to database
@@ -59,6 +58,8 @@ const DashboardComments = ({ task_id, comments, setComments }) => {
         <>
                         <DashboardFormLabel label="Comments" />
                         { comments.length > 0 && comments.map(x => {
+                            console.log(moment(x.commentDate).format("DD MMM YYYY"));
+                            
                             return (
                                 <div className="auto-height width-95 flex-column margin-top-20">
                                     <p className="comment-date">{moment(x.commentDate).format("DD MMM YYYY")}</p>
