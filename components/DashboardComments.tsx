@@ -32,11 +32,14 @@ const DashboardComments = ({ task_id, comments, setComments }) => {
             commentDate: new Date().toLocaleDateString()
         }
 
+        console.log(commentToAdd);
+        
+
         const commentsArrayToPush = [...comments, commentToAdd]
 
         
 
-        // try / catch to push new variable to database
+        // // try / catch to push new variable to database
 
         try {
             const response = await saveComment({
@@ -65,7 +68,7 @@ const DashboardComments = ({ task_id, comments, setComments }) => {
                         })}
                         <textarea className="comment-textarea width-95" placeholder="Add comment" value={comment} onChange={handleChange} />
                         <div className="auto-height width-95 flex-end">
-                            <button className="action-button margin-vertical-10" onClick={saveComments}>{ pending ? <Spinner /> : "Save comment" }</button>
+                            <button className="action-button margin-vertical-10" onClick={saveComments} disabled={ comment.length < 1 ? true : false }>{ pending ? <Spinner /> : "Save comment" }</button>
                         </div>
                         
                     </>

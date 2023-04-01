@@ -9,10 +9,11 @@ type Props = {
     showSaveButton: boolean,
     onClick?,
     pending?,
-    showHamburger
+    showHamburger, 
+    state
 }
 
-const DashboardBackButton = ({ showSaveButton, onClick, pending, showHamburger }: Props) => {
+const DashboardBackButton = ({ showSaveButton, onClick, pending, showHamburger, state  }: Props) => {
     return (
         <div className="auto-height width-100 flex-center border-separator-bottom">
             <div className="auto-height width-47 flex-start margin-vertical-20">
@@ -24,7 +25,7 @@ const DashboardBackButton = ({ showSaveButton, onClick, pending, showHamburger }
             <div className="auto-height width-47 flex-end">
                 {/* <FontAwesomeIcon className="margin-right-20" icon={faTrash} /> */}
                 
-                { showSaveButton === true ? <button className="action-button margin-left-10 margin-right-10" onClick={onClick}>
+                { showSaveButton === true ? <button className="action-button margin-left-10 margin-right-10" onClick={onClick} disabled={ state.length < 1 ? true : false }>
                     {pending ? <Spinner /> : "Save" }
                 </button> : null }
                 <FontAwesomeIcon className="hamburger-toggle margin-left-10 margin-right-10" icon={faSquareCaretLeft} onClick={() => showHamburger(true)} />

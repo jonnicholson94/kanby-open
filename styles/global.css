@@ -88,10 +88,15 @@ button {
     font-size: 16px;
     font-weight: bold;
     border: 2px solid var(--primary-bg);
+    border-radius: 5px;
 }
 
 .date-input:hover {
     border: 2px solid var(--border);
+}
+
+.error-input {
+    border: 2px solid var(--error);
 }
 
 .action-button {
@@ -102,6 +107,10 @@ button {
     color: var(--cta-font);
     cursor: pointer;
     border-radius: 5px;
+}
+
+.action-button:disabled {
+    opacity: 0.5;
 }
 
 .cancel-button {

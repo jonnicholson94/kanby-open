@@ -17,3 +17,11 @@ export const validatePassword = (value: string) => {
         return ''
     }
 }
+
+export const validateLength = (value: string) => {
+    if (value.length < 1) {
+        return 'Enter a title for your task'
+    } else {
+        return ''
+    }
+}

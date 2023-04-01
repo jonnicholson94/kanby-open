@@ -33,7 +33,7 @@ const CreateTask = () => {
 
     const [pending, setPending] = useState<boolean>(false)
 
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(null)
 
     const dispatch = useAppDispatch()
 
@@ -101,7 +101,7 @@ const CreateTask = () => {
 
     return (
         <DashboardContainer>
-                <DashboardBackButton showSaveButton={true} onClick={handleSubmit} pending={pending} showHamburger={setShow} />
+                <DashboardBackButton showSaveButton={true} onClick={handleSubmit} pending={pending} showHamburger={setShow} state={title} />
                 <div className="view-task-container auto-height width-100 flex-around-start">
                     <div className="view-task-left width-65 flex-center flex-column">
                         <DashboardTitle state={title} setState={setTitle} />
@@ -115,7 +115,7 @@ const CreateTask = () => {
                         <DashboardDateInput state={date} setState={setDate} />
                     </div>
                 </div>
-                { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id="" type="create" /> : null }
+                <DashboardHamburger show={show} setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id="" type="create" />
             </DashboardContainer>
     )
 }

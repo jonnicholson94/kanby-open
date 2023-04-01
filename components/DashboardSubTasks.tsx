@@ -72,9 +72,9 @@ const DashboardSubTasks = ({ state, setState, task_id }: Props) => {
                 <div className="auto-height width-100 flex-center flex-column margin-vertical-10">
                     <input className="standard-input height-100 width-100" type="text" value={individualTask} onChange={handleChange} placeholder="Add sub-task" />
                     <div className="auto-height width-100 flex-end">
-                        <div className="action-button height-100 flex-center margin-top-20" onClick={handleClick}>
+                        <button className="action-button height-100 flex-center margin-top-20" onClick={handleClick} disabled={ individualTask.length < 1 ? true : false }>
                             { pending ? <Spinner /> : "Add" }
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>

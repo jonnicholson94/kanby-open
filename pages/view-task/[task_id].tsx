@@ -42,7 +42,7 @@ const ViewTask = () => {
     const [updateTask] = useUpdateTaskMutation()
     const [deleteTask] = useDeleteTaskMutation()
 
-    const [title, setTitle] = useState<string>()
+    const [title, setTitle] = useState<string>("")
     const [description, setDescription] = useState<string>("")
     const [status, setStatus] = useState<Status>("Backlog")
     const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
@@ -52,7 +52,7 @@ const ViewTask = () => {
 
     const [pending, setPending] = useState<boolean>(false)
 
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(null)
 
     useEffect(() => {
         if (data) {
@@ -149,7 +149,7 @@ const ViewTask = () => {
     if (data || isFetching) {
         return (
             <DashboardContainer>
-                <DashboardBackButton showSaveButton={true} onClick={handleTaskUpdate} pending={pending} showHamburger={setShow} />
+                <DashboardBackButton showSaveButton={true} onClick={handleTaskUpdate} pending={pending} showHamburger={setShow} state={title} />
                 <div className="view-task-container auto-height width-100 flex-around-start">
                     <div className="view-task-left width-65 flex-center flex-column">
                         <DashboardTitle state={title} setState={setTitle} />
@@ -170,7 +170,7 @@ const ViewTask = () => {
                     </div>
                 </div>
             <PopupContainer />
-            { show ? <DashboardHamburger setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id={task_id} type="view" /> : null }
+            <DashboardHamburger show={show} setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id={task_id} type="view" />
             </DashboardContainer>
         )
     }

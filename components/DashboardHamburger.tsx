@@ -22,7 +22,7 @@ type Props = {
     type?
 }
 
-const DashboardHamburger = ({ setShow, status, setStatus, category, setCategory, task_id, type }) => {
+const DashboardHamburger = ({ show, setShow, status, setStatus, category, setCategory, task_id, type }) => {
 
     const router = useRouter()
     const dispatch = useAppDispatch()
@@ -64,8 +64,8 @@ const DashboardHamburger = ({ setShow, status, setStatus, category, setCategory,
 
     return (
         <>
-            <div className="dashboard-hamburger-blocker" onClick={() => setShow(false)}></div>
-            <div className="dashboard-hamburger width-80 flex-start flex-column relative">
+            { show ? <div className="dashboard-hamburger-blocker" onClick={() => setShow(false)}></div> : null }
+            <div className="dashboard-hamburger width-80 flex-start flex-column relative" data-state={show}>
                 <div className="auto-height width-80 flex-start margin-vertical-30">
                     { type === "create" ? null :
                     <AlertPopup title="Are you sure you want to delete this task?" description="Once you do, you won't be able to get it back." onClick={handleTaskDelete}>
