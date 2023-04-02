@@ -1,7 +1,7 @@
 
 export const emailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)
 
-export const validateEmail = (value: string) => {
+export const validateEmail = (value: string): string => {
 
     if (!emailRegex.test(value)) {
         return 'Enter a valid email address'
@@ -10,7 +10,7 @@ export const validateEmail = (value: string) => {
     }
 }
 
-export const validatePassword = (value: string) => {
+export const validatePassword = (value: string): string => {
     if (value.length < 6) {
         return 'Your password must be at least 6 characters'
     } else {
@@ -18,7 +18,7 @@ export const validatePassword = (value: string) => {
     }
 }
 
-export const validateLength = (value: string) => {
+export const validateLength = (value: string): string => {
     if (value.length < 1) {
         return 'Enter a title for your task'
     } else {

@@ -1,9 +1,13 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+import { Task } from '../types/dataSchema'
+
 export const apiSlice = createApi({
     reducerPath: "api",
-    baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: "/api"
+     }),
     tagTypes: ['Tasks', 'IndividualTask'],
     endpoints: builder => ({
         fetchTasks: builder.query({
@@ -14,7 +18,7 @@ export const apiSlice = createApi({
                 }
             }),
             providesTags: ['Tasks'],
-            transformResponse: (response) => response
+            transformResponse: (response: Task[]) => response
         }),
         fetchSingleTask: builder.query({
             query: (task_id) => ({

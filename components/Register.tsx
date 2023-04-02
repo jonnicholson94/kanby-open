@@ -5,13 +5,20 @@ import Router from 'next/router'
 import { signup } from '../lib/supabase/authFunctions'
 import { checkError } from '../lib/checkError'
 
+import { Auth } from '../types/auth'
+
 import AuthButton from "../elements/AuthButton"
 import AuthHeading from "../elements/AuthHeading"
 import AuthInput from "../elements/AuthInput"
 import AuthLabel from "../elements/AuthLabel"
 import ErrorMessage from './ErrorMessage'
 
-const Register = ({ onClick }) => {
+
+type Props = {
+    onClick: React.Dispatch<React.SetStateAction<Auth>>
+}
+
+const Register = ({ onClick }: Props) => {
 
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
@@ -27,7 +34,7 @@ const Register = ({ onClick }) => {
 
         try {
 
-            const {data, error} = await signup(email, password) 
+            const { data, error } = await signup(email, password) 
 
             if (error) {
                 setError(() => checkError(error.message))

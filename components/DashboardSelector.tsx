@@ -1,9 +1,12 @@
 
-import { useState, useEffect } from 'react'
-
 import DashboardSelectorToggle from "../elements/DashboardSelectorToggle"
 
-const DashboardSelector = ({ state, setState }) => {
+type Props = {
+    state: boolean,
+    setState: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const DashboardSelector = ({ state, setState }: Props) => {
     
     return (
         <div className="auto-height width-100 flex-center border-separator">

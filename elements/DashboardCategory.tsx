@@ -1,5 +1,4 @@
 
-import { useState } from "react"
 import * as Select from '@radix-ui/react-select';
 
 import { Category } from "../types/dataSchema"

@@ -1,7 +1,14 @@
 
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 
-const AlertPopup = ({ children, title, description, onClick }) => {
+type Props = {
+    children: React.ReactElement,
+    title: string,
+    description: string,
+    onClick: React.Dispatch<React.MouseEvent>
+}
+
+const AlertPopup = ({ children, title, description, onClick }: Props) => {
 
     return (
         <AlertDialog.Root>

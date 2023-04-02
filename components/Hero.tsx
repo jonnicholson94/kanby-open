@@ -2,9 +2,16 @@ import Register from "./Register"
 import SignIn from "./SignIn"
 import ResetPassword from './ResetPassword'
 
-const Hero = ({ active, setActive }) => {
+import { Auth } from "../types/auth"
 
-    const handleActiveClick = (type: string) => {
+type Props = {
+    active: Auth,
+    setActive: React.Dispatch<React.SetStateAction<Auth>>
+}
+
+const Hero = ({ active, setActive }: Props) => {
+
+    const handleActiveClick = (type: Auth): void => {
         setActive(type)
     }
 

@@ -9,7 +9,7 @@ import { SubTask } from "../types/dataSchema"
 type Props = {
     state: SubTask[] | undefined[],
     setState: React.Dispatch<React.SetStateAction<SubTask[] | undefined[]>>,
-    task_id?
+    task_id?: string | string[]
 }
 
 const DashboardSubTasks = ({ state, setState, task_id }: Props) => {

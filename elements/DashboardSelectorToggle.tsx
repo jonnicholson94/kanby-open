@@ -3,7 +3,7 @@
 type Props = {
     active: boolean, 
     content: string,
-    onClick
+    onClick: React.Dispatch<React.MouseEvent>
 }
 
 const DashboardSelectorToggle = ({ active, content, onClick }: Props) => {

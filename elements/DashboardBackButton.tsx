@@ -7,10 +7,10 @@ import Spinner from "./Spinner"
 
 type Props = {
     showSaveButton: boolean,
-    onClick?,
-    pending?,
-    showHamburger, 
-    state
+    onClick?: React.Dispatch<React.FormEvent>,
+    pending?: boolean,
+    showHamburger: React.Dispatch<React.SetStateAction<boolean>>, 
+    state: string
 }
 
 const DashboardBackButton = ({ showSaveButton, onClick, pending, showHamburger, state  }: Props) => {
@@ -23,7 +23,6 @@ const DashboardBackButton = ({ showSaveButton, onClick, pending, showHamburger, 
                 </Link>
             </div>
             <div className="auto-height width-47 flex-end">
-                {/* <FontAwesomeIcon className="margin-right-20" icon={faTrash} /> */}
                 
                 { showSaveButton === true ? <button className="action-button margin-left-10 margin-right-10" onClick={onClick} disabled={ state.length < 1 ? true : false }>
                     {pending ? <Spinner /> : "Save" }

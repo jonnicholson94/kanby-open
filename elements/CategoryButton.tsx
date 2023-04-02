@@ -8,7 +8,7 @@ import { Category } from "../types/dataSchema"
 type Props = {
     category: Category,
     selected?: boolean,
-    onClick
+    onClick: Function
 }
 
 const CategoryButton = ({ category, selected, onClick }: Props) => {

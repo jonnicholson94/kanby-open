@@ -12,17 +12,20 @@ import { useDeleteTaskMutation } from "../features/apiSlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
+import { Status, Category } from "../types/dataSchema"
+
 type Props = {
-    setShow,
-    status,
-    setStatus,
-    category, 
-    setCategory,
-    task_id?,
-    type?
+    show: boolean,
+    setShow: React.Dispatch<React.SetStateAction<boolean>>,
+    status: Status,
+    setStatus: React.Dispatch<React.SetStateAction<Status>>,
+    category: Category, 
+    setCategory: React.Dispatch<React.SetStateAction<Category>>,
+    task_id?: string | string[],
+    type?: "view" | "create"
 }
 
-const DashboardHamburger = ({ show, setShow, status, setStatus, category, setCategory, task_id, type }) => {
+const DashboardHamburger = ({ show, setShow, status, setStatus, category, setCategory, task_id, type }: Props) => {
 
     const router = useRouter()
     const dispatch = useAppDispatch()

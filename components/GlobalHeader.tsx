@@ -1,13 +1,6 @@
 
 import Link from "next/link"
-import { Anton } from "next/font/google"
-
 import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
-
-const anton = Anton({
-    weight: '400',
-    subsets: ['latin']
-})
 
 type Props = {
     url: string,

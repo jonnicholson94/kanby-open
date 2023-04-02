@@ -1,9 +1,8 @@
 
+
 import { AuthErrorResponses, AuthErrors } from "../types/auth"
 
-export const checkError = (message: string) => {
-
-    console.log(message);
+export const checkError = (message: string): AuthErrorResponses => {
 
     if (message === AuthErrors.ACCOUNT_EXISTS) {
         return AuthErrorResponses.ACCOUNT_EXISTS
@@ -13,5 +12,7 @@ export const checkError = (message: string) => {
         return AuthErrorResponses.ACCOUNT_INVALID
     } else if (message === AuthErrors.SECURITY_ERROR) {
         return AuthErrorResponses.MULTIPLE_REQUESTS
+    } else {
+        return AuthErrorResponses.DEFAULT
     }
 }

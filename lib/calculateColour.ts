@@ -1,7 +1,9 @@
 
 import { CategoryColour } from "../types/dataSchema"
 
-export const calculateColour = (category) => {
+import { Category } from "../types/dataSchema"
+
+export const calculateColour = (category: Category): CategoryColour => {
     if (category === "General") {
         return CategoryColour.GENERAL
     } else if (category === "Health") {
@@ -12,7 +14,5 @@ export const calculateColour = (category) => {
         return CategoryColour.LIFE
     } else if (category === "Work") {
         return CategoryColour.WORK
-    } else {
-        return "var(--purple)"
     }
 }
