@@ -53,8 +53,11 @@ const DashboardSubTasks = ({ state, setState, user_id, task_id }: Props) => {
 
     const toggleStatus = async (selected_id) => {
 
-        const task = state.filter((x) => {
-            return x.id === selected_id
+        const task = state.filter((x: SubTask) => {
+            if (x) {
+                return x.id === selected_id
+            }
+            
         })
 
         let newStatus: boolean 
