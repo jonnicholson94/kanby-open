@@ -7,9 +7,10 @@ const app = express()
 const handler = async (req, res) => {
     res.setHeader("Content-Type", "application/json")
 
-    const { user_id, title, description, due_date, category, status, sub_tasks, comments } = req.body
+    const { user_id, title, description, due_date, category, status } = req.body
 
     try {
+        
         const { data, error } = await supabase.from("tasks").insert([
             {
                 user_id: user_id,
@@ -18,8 +19,7 @@ const handler = async (req, res) => {
                 due_date: due_date,
                 category: category,
                 status: status,
-                sub_tasks: sub_tasks,
-                comments: comments
+                comments: []
             }
         ])
         

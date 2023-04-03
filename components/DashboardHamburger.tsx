@@ -31,8 +31,6 @@ const DashboardHamburger = ({ show, setShow, status, setStatus, category, setCat
     const dispatch = useAppDispatch()
     const [deleteTask] = useDeleteTaskMutation()
 
-    console.log(task_id)
-
     const handleTaskDelete = async () => {
 
         try {

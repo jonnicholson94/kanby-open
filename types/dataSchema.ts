@@ -12,22 +12,18 @@ export type Task = {
     due_date: string,
     category: string,
     comments: TaskComment[],
+    sub_tasks: string[],
     status: string,
     createdDate: string,
     completedDate: string
 }
 
-export type IndividualTask = {
-    parentTaskId: string,
-    accountId: string,
-    title: string,
-    status: string,
-    createdDate: string
-}
-
 export type SubTask = {
+    id: string,
     title: string,
-    status: boolean
+    status: boolean,
+    parent_task: string,
+    user: string
 }
 
 export type Status = "Backlog" | "In progress" | "Paused" | "Completed"

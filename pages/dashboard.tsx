@@ -1,8 +1,9 @@
 
 import { useState } from "react"
 
-import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { useSessionContext, useUser } from "@supabase/auth-helpers-react" 
+
+import { Helmet } from "react-helmet"
 
 import Router from "next/router"
 
@@ -26,8 +27,7 @@ const Dashboard = () => {
 
     if (!user) {
         console.log("No user.");
-        return Router.push("/")
-        
+        return Router.push("/")   
     }
 
     const { data, isFetching } = useFetchTasksQuery(user.id)
@@ -39,6 +39,11 @@ const Dashboard = () => {
 
     return (
             <>
+                <Helmet>
+                    <title>
+                        Dashboard | Kanby
+                    </title>
+                </Helmet>
                 <GlobalHeader url="/create-task" link="Create task" />
                 <DashboardSelector state={status} setState={setStatus} />
                 <DashboardContainer>

@@ -6,7 +6,7 @@
 
 .popup-container {
     width: 40%;
-    background-color: var(--white);
+    background-color: var(--primary-bg);
     border: 2px solid var(--border);
     border-radius: 10px;
     position: fixed;

@@ -1,15 +1,17 @@
 
 import { useState, useEffect } from "react"
-import { displayStatus, hideStatus } from "../../features/statusSlice"
-import { useAppDispatch } from "../../lib/reduxHelpers"
+
+import { Helmet } from "react-helmet"
 
 import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
 import { useRouter } from "next/router"
 
-import { useFetchSingleTaskQuery, useUpdateTaskMutation, useDeleteTaskMutation } from "../../features/apiSlice"
+import { useFetchSingleTaskQuery, useUpdateTaskMutation, useDeleteTaskMutation, useFetchSubTasksQuery } from "../../features/apiSlice"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
+
+import useDispatchStatus from "../../lib/hooks/useDispatchStatus"
 
 import DashboardContainer from "../../components/DashboardContainer"
 import DashboardTitle from "../../components/DashboardTitle"
@@ -28,17 +30,19 @@ import DashboardHamburger from "../../components/DashboardHamburger"
 import AlertPopup from "../../elements/AlertPopup"
 
 
+
 const ViewTask = () => {
 
     const { isLoading } = useSessionContext()
     const user = useUser()
     const router = useRouter()
 
-    const dispatch = useAppDispatch()
+    const dispatchStatus = useDispatchStatus()
 
     const { task_id } = router.query
 
     const { data, isFetching } = useFetchSingleTaskQuery(task_id)
+    const { data: subTaskData, isFetching: fetchingSubTasks } = useFetchSubTasksQuery(task_id)
     const [updateTask] = useUpdateTaskMutation()
     const [deleteTask] = useDeleteTaskMutation()
 
@@ -59,13 +63,21 @@ const ViewTask = () => {
             setTitle(data[0].title)
             setDescription(data[0].description)
             setStatus(data[0].status)
-            setSubTasks(data[0].sub_tasks)
             setCategory(data[0].category)
             setDate(data[0].due_date)
-            setComments(data[0].comments)
-            
+            setComments(data[0].comments)   
         }
     }, [data])
+
+    useEffect(() => {
+        if (subTaskData) {
+            console.log(subTaskData);
+            setSubTasks(subTaskData as SubTask[] | [])
+        }
+    }, [subTaskData])
+
+    console.log("Running....");
+    
 
     const handleTaskUpdate = async () => {
 
@@ -81,23 +93,14 @@ const ViewTask = () => {
                 due_date: date
             })
 
-            dispatch(displayStatus({
-                payloadMessage: "Successfully updated your task",
-                payloadType: "success"
-             }))
-         
-             setTimeout(() => dispatch(hideStatus()), 5000)
+            dispatchStatus("Successfully updated your task", "success")
 
             console.log(response);
             
         } catch (error) {
             console.log(error);
-            dispatch(displayStatus({
-                payloadMessage: error,
-                payloadType: "error"
-             }))
-         
-             setTimeout(() => dispatch(hideStatus()), 5000)
+            dispatchStatus(error, "error")
+
         }
 
         setPending(false)
@@ -112,13 +115,8 @@ const ViewTask = () => {
             })
 
             if (response) {
-                
-                dispatch(displayStatus({
-                    payloadMessage: "Successfully updated your task",
-                    payloadType: "success"
-                 }))
-             
-                 setTimeout(() => dispatch(hideStatus()), 5000)
+
+                dispatchStatus("Successfully updated your task", "success")
     
                 console.log(response);
 
@@ -127,12 +125,8 @@ const ViewTask = () => {
 
         } catch (error) {
             console.log(error);
-            dispatch(displayStatus({
-                payloadMessage: error,
-                payloadType: "error"
-             }))
-         
-             setTimeout(() => dispatch(hideStatus()), 5000)
+
+            dispatchStatus(error, "error")
             
         }
     }
@@ -146,15 +140,21 @@ const ViewTask = () => {
     }
         
 
-    if (data || isFetching) {
+    if (data) {
         return (
+            <>
+            <Helmet>
+                <title>
+                    View your task | Kanby
+                </title>
+            </Helmet>
             <DashboardContainer>
                 <DashboardBackButton showSaveButton={true} onClick={handleTaskUpdate} pending={pending} showHamburger={setShow} state={title} />
                 <div className="view-task-container auto-height width-100 flex-around-start">
                     <div className="view-task-left width-65 flex-center flex-column">
                         <DashboardTitle state={title} setState={setTitle} />
                         <DashboardTextarea state={description} setState={setDescription} />
-                        <DashboardSubTasks state={subTasks} setState={setSubTasks} task_id={task_id} />
+                        <DashboardSubTasks state={subTasks} setState={setSubTasks} user_id={user.id} task_id={task_id} />
                         <DashboardComments task_id={task_id} comments={comments} setComments={setComments} />
                     </div>
                     <div className="view-task-right auto-height width-35 flex-start flex-column relative">
@@ -172,6 +172,7 @@ const ViewTask = () => {
             <PopupContainer />
             <DashboardHamburger show={show} setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id={task_id} type="view" />
             </DashboardContainer>
+            </>
         )
     }
 }

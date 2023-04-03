@@ -8,7 +8,7 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({ 
         baseUrl: "/api"
      }),
-    tagTypes: ['Tasks', 'IndividualTask'],
+    tagTypes: ['Tasks', 'IndividualTask', "SubTask"],
     endpoints: builder => ({
         fetchTasks: builder.query({
             query: (user_id) => ({
@@ -28,6 +28,16 @@ export const apiSlice = createApi({
                 }
             }),
             providesTags: ['IndividualTask'],
+            transformResponse: (response) => response
+        }),
+        fetchSubTasks: builder.query({
+            query: (task_id) => ({
+                url: "/fetchSubTasks",
+                params: {
+                    task_id
+                }
+            }),
+            providesTags: ['SubTask'],
             transformResponse: (response) => response
         }),
         updateTask: builder.mutation({
@@ -76,11 +86,21 @@ export const apiSlice = createApi({
                     method: 'PUT',
                     body
                 }
+            },
+            invalidatesTags: ['SubTask']
+        }),
+        updateSubTask: builder.mutation({
+            query: (body) => {
+                return {
+                    url: '/updateSubTask',
+                    method: 'PUT',
+                    body
+                }
             }
         })
     })
 })
 
-export const { useFetchTasksQuery, useFetchSingleTaskQuery, useUpdateTaskMutation, useDeleteTaskMutation, useAddNewTaskMutation, useSaveCommentMutation, useAddSubTaskMutation } = apiSlice
+export const { useFetchTasksQuery, useFetchSingleTaskQuery, useFetchSubTasksQuery, useUpdateTaskMutation, useDeleteTaskMutation, useAddNewTaskMutation, useSaveCommentMutation, useAddSubTaskMutation, useUpdateSubTaskMutation } = apiSlice
 
 

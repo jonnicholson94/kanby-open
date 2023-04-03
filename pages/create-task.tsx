@@ -1,8 +1,9 @@
 
 import { useState } from "react"
 
-import { displayStatus, hideStatus } from "../features/statusSlice"
-import { useAppDispatch } from "../lib/reduxHelpers"
+import useDispatchStatus from "../lib/hooks/useDispatchStatus"
+
+import { Helmet } from "react-helmet"
 
 import { Status, Category, SubTask } from "../types/dataSchema"
 
@@ -29,13 +30,12 @@ const CreateTask = () => {
     const [status, setStatus] = useState<Status>("Backlog")
     const [category, setCategory] = useState<Category>("General")
     const [date, setDate] = useState<string>()
-    const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
 
     const [pending, setPending] = useState<boolean>(false)
 
     const [show, setShow] = useState(null)
 
-    const dispatch = useAppDispatch()
+    const dispatchStatus = useDispatchStatus()
 
     const { isLoading } = useSessionContext()
     const user = useUser()
@@ -65,48 +65,41 @@ const CreateTask = () => {
                         status: status,
                         category: category,
                         due_date: date,
-                        sub_tasks: subTasks,
-                        comments: []
                     }).unwrap()
                 
                 if (response === 200) {
                     router.push("dashboard")
-                    setTimeout(() => dispatch(displayStatus({
-                        payloadMessage: "Successfully created your task",
-                        payloadType: "success"
-                     })), 500)
+
+                    dispatchStatus("Successfully created your task", "success")
                  
-                     setTimeout(() => dispatch(hideStatus()), 5000)
                 }
 
                 if (response === 400) {
-                    console.log("There was an error");
                     setPending(false)
 
-                    setTimeout(() => dispatch(displayStatus({
-                        payloadMessage: "Failed to create your task",
-                        payloadType: "error"
-                     })), 2000)
-                 
-                     setTimeout(() => dispatch(hideStatus()), 5000)
+                    dispatchStatus("Failed to create your task", "error")
                     
                 }
                
             } catch (error) {
-                console.log(error);
-                console.log("Caught an error")
+                dispatchStatus("Failed to create your task", "error")
                 setPending(false)
             }
         }
 
     return (
+        <>
+        <Helmet>
+                <title>
+                    Create a task | Kanby
+                </title>
+            </Helmet>
         <DashboardContainer>
                 <DashboardBackButton showSaveButton={true} onClick={handleSubmit} pending={pending} showHamburger={setShow} state={title} />
                 <div className="view-task-container auto-height width-100 flex-around-start">
                     <div className="view-task-left width-65 flex-center flex-column">
                         <DashboardTitle state={title} setState={setTitle} />
                         <DashboardTextarea state={description} setState={setDescription} />
-                        <DashboardSubTasks state={subTasks} setState={setSubTasks} />
                     </div>
                     <div className="view-task-right auto-height width-35 flex-start flex-column relative">
                         <DashboardStatus state={status} setState={setStatus} />
@@ -117,6 +110,7 @@ const CreateTask = () => {
                 </div>
                 <DashboardHamburger show={show} setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id="" type="create" />
             </DashboardContainer>
+            </>
     )
 }
 
