@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from "react"
-
-import { Helmet } from "react-helmet"
+import Head from "next/head"
 
 import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
 import { useRouter } from "next/router"
@@ -143,11 +142,11 @@ const ViewTask = () => {
     if (data) {
         return (
             <>
-            <Helmet>
+            <Head>
                 <title>
                     View your task | Kanby
                 </title>
-            </Helmet>
+            </Head>
             <DashboardContainer>
                 <DashboardBackButton showSaveButton={true} onClick={handleTaskUpdate} pending={pending} showHamburger={setShow} state={title} />
                 <div className="view-task-container auto-height width-100 flex-around-start">

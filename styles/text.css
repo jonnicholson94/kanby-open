@@ -40,6 +40,16 @@ h4 {
     text-decoration: line-through;
 }
 
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.overflow-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media only screen and (max-width: 1200px) {
     h1 {
         font-size: 60px;

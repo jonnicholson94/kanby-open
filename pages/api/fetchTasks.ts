@@ -7,7 +7,6 @@ const app = express()
 const handler = async (req, res) => {
 
     const { user_id } = req.query
-    
 
     try {
         const { data, error } = await supabase.from("tasks").select("*").eq("user_id", user_id)

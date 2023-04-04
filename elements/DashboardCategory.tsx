@@ -1,6 +1,13 @@
 
 import * as Select from '@radix-ui/react-select';
 
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+    weight: ['100', '300', '400', '500', '700', '900'],
+    subsets: ['latin']
+})
+
 import { Category } from "../types/dataSchema"
 
 import { calculateColour } from "../lib/calculateColour";
@@ -29,7 +36,7 @@ const DashboardCategory = ({ state, setState }: Props) => {
                     </Select.Trigger>
                 
                         <Select.Portal>
-                            <Select.Content className="status-portal" position={'popper'}>
+                            <Select.Content className={`${roboto.className} status-portal`} position={'popper'}>
                                 <Select.Viewport className="status-view height-100 flex-center flex-column">
                                     <Select.Group className="height-90 width-90 flex-center flex-column margin-vertical-20">
                                         <Select.SelectItem className="status-select flex-start width-100" value="General">

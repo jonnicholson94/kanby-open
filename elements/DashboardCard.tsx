@@ -17,8 +17,8 @@ const DashboardCard = ({ id, title, category, date }: Props) => {
 
     return (
         <Link className="dashboard-card auto-height width-100 flex-center" href={`/view-task/${id}`}>
-            <div className="auto-height width-47 flex-start">
-                <p className="margin-left-20">{title}</p>
+            <div className="auto-height width-47 flex-start overflow-hidden">
+                <p className="margin-left-20 overflow-ellipsis">{title}</p>
             </div>
             <div className="auto-height width-47 flex-end">
                 

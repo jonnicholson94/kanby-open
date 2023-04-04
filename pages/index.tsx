@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from "next/head"
 import { faPlus, faCalendar, faList, faComments, faCheck } from "@fortawesome/free-solid-svg-icons"
 
 import { Auth } from '../types/auth'
@@ -16,11 +16,11 @@ const HomePage = () => {
   
     return (
       <>
-        <Helmet>
+        <Head>
           <title>
             Kanby | Manage all of your tasks, without the fuss
           </title>
-        </Helmet>
+        </Head>
   
         <GlobalHeader url="/dashboard" link="Dashboard" />
         <Hero active={active} setActive={setActive} />

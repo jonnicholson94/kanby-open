@@ -8,6 +8,13 @@ import DashboardFormLabel from "../elements/DashboardFormLabel"
 import Spinner from "../elements/Spinner"
 import { TaskComment } from "../types/dataSchema"
 
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+    weight: ['100', '300', '400', '500', '700', '900'],
+    subsets: ['latin']
+})
+
 type Props = {
     task_id: string | string[],
     comments: TaskComment[],
@@ -92,7 +99,7 @@ const DashboardComments = ({ task_id, comments, setComments }: Props) => {
                     </div>
                 )
             })}
-            <textarea className="comment-textarea width-95" placeholder="Add comment" value={comment} onChange={handleChange} />
+            <textarea className={`comment-textarea width-95 ${roboto.className}`} placeholder="Add comment" value={comment} onChange={handleChange} />
             <div className="auto-height width-95 flex-end">
                 <button className="action-button margin-vertical-10" onClick={saveComments} disabled={ comment.length < 1 ? true : false }>{ pending ? <Spinner /> : "Save comment" }</button>
             </div>                

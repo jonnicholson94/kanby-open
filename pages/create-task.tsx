@@ -1,9 +1,8 @@
 
 import { useState } from "react"
+import Head from "next/head"
 
 import useDispatchStatus from "../lib/hooks/useDispatchStatus"
-
-import { Helmet } from "react-helmet"
 
 import { Status, Category, SubTask } from "../types/dataSchema"
 
@@ -79,22 +78,24 @@ const CreateTask = () => {
 
                     dispatchStatus("Failed to create your task", "error")
                     
-                }
+                } 
                
             } catch (error) {
                 dispatchStatus("Failed to create your task", "error")
                 setPending(false)
             }
+
+            
         }
 
     return (
         <>
-        <Helmet>
+            <Head>
                 <title>
                     Create a task | Kanby
                 </title>
-            </Helmet>
-        <DashboardContainer>
+            </Head>
+            <DashboardContainer>
                 <DashboardBackButton showSaveButton={true} onClick={handleSubmit} pending={pending} showHamburger={setShow} state={title} />
                 <div className="view-task-container auto-height width-100 flex-around-start">
                     <div className="view-task-left width-65 flex-center flex-column">
@@ -110,7 +111,7 @@ const CreateTask = () => {
                 </div>
                 <DashboardHamburger show={show} setShow={setShow} status={status} setStatus={setStatus} category={category} setCategory={setCategory} task_id="" type="create" />
             </DashboardContainer>
-            </>
+        </>
     )
 }
 

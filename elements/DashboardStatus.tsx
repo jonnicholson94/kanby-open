@@ -1,5 +1,12 @@
 import * as Select from '@radix-ui/react-select';
 
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+    weight: ['100', '300', '400', '500', '700', '900'],
+    subsets: ['latin']
+})
+
 import { Status } from "../types/dataSchema"
 
 type Props = {
@@ -26,7 +33,7 @@ const DashboardStatus = ({ state, setState }: Props) => {
                         <Select.Value>{state}</Select.Value>
                     </Select.Trigger>
                 
-                        <Select.Portal>
+                        <Select.Portal className={`${roboto.className}`}>
                             <Select.Content className="status-portal" position={'popper'}>
                                 <Select.Viewport className="status-view height-100 flex-center flex-column">
                                     <Select.Group className="height-90 width-90 flex-center flex-column margin-vertical-20">
