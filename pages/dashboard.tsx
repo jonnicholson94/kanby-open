@@ -1,47 +1,25 @@
 
 import { useState } from "react"
 import Head from "next/head"
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs"
 
-import { useSessionContext, useUser } from "@supabase/auth-helpers-react" 
-
-import Router from "next/router"
-
-import { useFetchTasksQuery } from "../features/apiSlice"
 import useDispatchStatus from "../lib/hooks/useDispatchStatus"
 
 import DashboardContainer from "../components/DashboardContainer"
 import DashboardSelector from "../components/DashboardSelector"
 import GlobalHeader from "../components/GlobalHeader"
 import DashboardCardContainer from "../components/DashboardCardContainer"
-import SplashScreen from "../components/SplashScreen"
 import PopupContainer from "../elements/PopupContainer"
 
-const Dashboard = () => {
+const Dashboard = ({ tasks }) => {
 
-    const { isLoading } = useSessionContext()
-    const user = useUser()
     const dispatchStatus = useDispatchStatus()
 
-    if (isLoading) {
-        return <SplashScreen />
-    }
-
-    if (!user) {
-        console.log("No user.");
-        return Router.push("/")   
-    }
-
-    const { data, isFetching } = useFetchTasksQuery(user.id)
     const [status, setStatus] = useState<boolean>(true)
 
-    if (isFetching) {
-        return <SplashScreen />
-    }
-
-    if (!data) {
+    if (!tasks) {
         dispatchStatus("We couldn't search for your data. Please check your internet connection and try again.", "error")
     }
-
 
     return (
             <>
@@ -52,17 +30,17 @@ const Dashboard = () => {
                 </Head>
                 <GlobalHeader url="/create-task" link="Create task" />
                 <DashboardSelector state={status} setState={setStatus} />
-                { !data ? null :
+                { !tasks ? null :
                 <DashboardContainer>
-                    { !data ? <p>No internet connection. Please connect to the internet and try again.</p> : null }
-                    { data.length < 1 ? <p className="width-80 flex-center margin-vertical-50">You haven't added any tasks yet.</p> : null }
+                    { !tasks ? <p>No internet connection. Please connect to the internet and try again.</p> : null }
+                    { tasks.length < 1 ? <p className="width-80 flex-center margin-vertical-50">You haven't added any tasks yet.</p> : null }
                     { status ?
                      <>
-                        <DashboardCardContainer status="Backlog" data={data} />
-                        <DashboardCardContainer status="In progress" data={data} />
-                        <DashboardCardContainer status="Paused" data={data} />
+                        <DashboardCardContainer status="Backlog" data={tasks} />
+                        <DashboardCardContainer status="In progress" data={tasks} />
+                        <DashboardCardContainer status="Paused" data={tasks} />
                     </> : 
-                    <DashboardCardContainer status="Completed" data={data} /> }
+                    <DashboardCardContainer status="Completed" data={tasks} /> }
                     
                 </DashboardContainer> }
                 <PopupContainer />
@@ -71,3 +49,31 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+
+export const getServerSideProps = async (ctx) => {
+
+    const supabase = createServerSupabaseClient(ctx)
+    
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+  
+    if (!session)
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
+
+      const { data, error } = await supabase.from("tasks").select("*").eq("user_id", session.user.id)
+  
+    return {
+      props: {
+        initialSession: session,
+        user: session.user,
+        tasks: data,
+        error: error
+      },
+    }
+  }

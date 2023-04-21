@@ -1,7 +1,7 @@
 
 import { useState } from "react"
 import { checkError } from "../lib/checkError"
-import { forgotPassword } from "../lib/supabase/authFunctions"
+import { useSupabaseClient } from "@supabase/auth-helpers-react"
 
 import AuthButton from "../elements/AuthButton"
 import AuthHeading from "../elements/AuthHeading"
@@ -10,12 +10,15 @@ import AuthLabel from "../elements/AuthLabel"
 import ErrorMessage from "./ErrorMessage"
 import SuccessMessage from "./SuccessMessage"
 
+
 const ResetPassword = ({ onClick }) => {
 
     const [email, setEmail] = useState<string>("")
     const [pending, setPending] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
+
+    const supabase = useSupabaseClient()
 
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
 
@@ -26,7 +29,7 @@ const ResetPassword = ({ onClick }) => {
         setSuccess("")
 
         try {
-            const { data, error } = await forgotPassword(email)
+            const { data, error } = await supabase.auth.resetPasswordForEmail(email)
 
             if (error) {
                 setError(() => checkError(error.message))

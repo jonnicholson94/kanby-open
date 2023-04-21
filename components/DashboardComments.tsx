@@ -9,6 +9,7 @@ import Spinner from "../elements/Spinner"
 import { TaskComment } from "../types/dataSchema"
 
 import { Roboto } from 'next/font/google'
+import { useSupabaseClient } from "@supabase/auth-helpers-react"
 
 const roboto = Roboto({
     weight: ['100', '300', '400', '500', '700', '900'],
@@ -22,6 +23,8 @@ type Props = {
 }
 
 const DashboardComments = ({ task_id, comments, setComments }: Props) => {
+
+    const supabase = useSupabaseClient()
 
     // The comment state is used to control a new comment that the user types in.
 
@@ -71,10 +74,7 @@ const DashboardComments = ({ task_id, comments, setComments }: Props) => {
         // to update, and passes comments in using the newly declared variable mentioned above.
 
         try {
-            const response = await saveComment({
-                task_id: task_id,
-                comments: commentsArrayToPush
-            })
+            const { data, error } = await supabase.from("tasks").update({ comments: commentsArrayToPush }).eq( "id", task_id )
 
             // Once the request has been completed, pending is set to false, and then the state is updated, to reflect
             // the changes that the user has made.

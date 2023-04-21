@@ -1,8 +1,8 @@
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Head from "next/head"
 
-import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs"
 import { useRouter } from "next/router"
 
 import { useFetchSingleTaskQuery, useUpdateTaskMutation, useDeleteTaskMutation, useFetchSubTasksQuery } from "../../features/apiSlice"
@@ -23,78 +23,51 @@ import DashboardCategory from "../../elements/DashboardCategory"
 import DashboardDateInput from "../../elements/DashboardDateInput"
 
 import { TaskComment, Category, Status, SubTask } from "../../types/dataSchema"
-import SplashScreen from "../../components/SplashScreen"
 import PopupContainer from "../../elements/PopupContainer"
 import DashboardHamburger from "../../components/DashboardHamburger"
 import AlertPopup from "../../elements/AlertPopup"
+import { useSupabaseClient } from "@supabase/auth-helpers-react"
 
 
 
-const ViewTask = () => {
+const ViewTask = ({ user, task, sub_tasks, task_id }) => {
 
-    const { isLoading } = useSessionContext()
-    const user = useUser()
     const router = useRouter()
 
     const dispatchStatus = useDispatchStatus()
+    const supabase = useSupabaseClient()
 
-    const { task_id } = router.query
-
-    const { data, isFetching } = useFetchSingleTaskQuery(task_id)
-    const { data: subTaskData, isFetching: fetchingSubTasks } = useFetchSubTasksQuery(task_id)
     const [updateTask] = useUpdateTaskMutation()
     const [deleteTask] = useDeleteTaskMutation()
 
-    const [title, setTitle] = useState<string>("")
-    const [description, setDescription] = useState<string>("")
-    const [status, setStatus] = useState<Status>("Backlog")
-    const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>([])
-    const [category, setCategory] = useState<Category>("General")
-    const [date, setDate] = useState<string>("")
-    const [comments, setComments] = useState<TaskComment[]>([])
+    const [title, setTitle] = useState<string>(task[0].title)
+    const [description, setDescription] = useState<string>(task[0].description)
+    const [status, setStatus] = useState<Status>(task[0].status)
+    const [subTasks, setSubTasks] = useState<SubTask[] | undefined[]>(sub_tasks)
+    const [category, setCategory] = useState<Category>(task[0].category)
+    const [date, setDate] = useState<string>(task[0].due_date)
+    const [comments, setComments] = useState<TaskComment[]>(task[0].comments)
 
     const [pending, setPending] = useState<boolean>(false)
 
     const [show, setShow] = useState(null)
-
-    useEffect(() => {
-        if (data) {
-            setTitle(data[0].title)
-            setDescription(data[0].description)
-            setStatus(data[0].status)
-            setCategory(data[0].category)
-            setDate(data[0].due_date)
-            setComments(data[0].comments)   
-        }
-    }, [data])
-
-    useEffect(() => {
-        if (subTaskData) {
-            console.log(subTaskData);
-            setSubTasks(subTaskData as SubTask[] | [])
-        }
-    }, [subTaskData])
-
-    console.log("Running....");
-    
 
     const handleTaskUpdate = async () => {
 
         setPending(true)
 
         try {
-            const response = await updateTask({
-                task_id,
+            const { data, error } = await supabase.from("tasks").update({ 
                 title,
                 description,
                 status,
-                category: category,
+                category,
                 due_date: date
-            })
+             }).eq( "id", task_id )
 
             dispatchStatus("Successfully updated your task", "success")
 
-            console.log(response);
+            console.log(data);
             
         } catch (error) {
             console.log(error);
@@ -109,15 +82,13 @@ const ViewTask = () => {
     const handleTaskDelete = async () => {
 
         try {
-            const response = await deleteTask({
-                task_id
-            })
+            const { data, error} = await supabase.from("tasks").delete().eq("id", task_id)
 
-            if (response) {
+            if (data) {
 
                 dispatchStatus("Successfully updated your task", "success")
     
-                console.log(response);
+                console.log(data);
 
                 router.push("/dashboard")
             }
@@ -129,18 +100,9 @@ const ViewTask = () => {
             
         }
     }
-
-    if (isLoading) {
-        return <SplashScreen />
-    }
-    
-    if (!user) {
-        router.push("/")
-    }
         
 
-    if (data) {
-        return (
+    return (
             <>
             <Head>
                 <title>
@@ -173,7 +135,40 @@ const ViewTask = () => {
             </DashboardContainer>
             </>
         )
-    }
 }
 
 export default ViewTask
+
+export const getServerSideProps = async (ctx) => {
+
+    const supabase = createServerSupabaseClient(ctx)
+
+    const { task_id } = ctx.query
+    
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+  
+    if (!session)
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
+
+    const { data: task, error: task_error } = await supabase.from("tasks").select("*").eq("id", task_id)
+    const { data: sub_tasks, error: sub_tasks_error } = await supabase.from("sub_tasks").select("*").eq("parent_task", task_id)
+  
+    return {
+      props: {
+        initialSession: session,
+        user: session.user,
+        task: task,
+        error: task_error,
+        sub_tasks: sub_tasks,
+        sub_task_error: sub_tasks_error,
+        task_id: task_id
+      },
+    }
+  }

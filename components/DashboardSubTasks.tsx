@@ -3,8 +3,8 @@ import { useState } from 'react'
 
 import DashboardFormLabel from "../elements/DashboardFormLabel"
 import Spinner from '../elements/Spinner'
-import { useAddSubTaskMutation, useUpdateSubTaskMutation } from '../features/apiSlice'
 import { SubTask } from "../types/dataSchema"
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 type Props = {
     state: SubTask[] | undefined[],
@@ -15,11 +15,10 @@ type Props = {
 
 const DashboardSubTasks = ({ state, setState, user_id, task_id }: Props) => {
 
+    const supabase = useSupabaseClient()
+
     const [individualTask, setIndividualTask] = useState<string>("")
     const [pending, setPending] = useState<boolean>(false)
-
-    const [ addSubTask ] = useAddSubTaskMutation()
-    const [ updateSubTask ] = useUpdateSubTaskMutation()
 
     const handleClick = async () => {
 
@@ -27,18 +26,18 @@ const DashboardSubTasks = ({ state, setState, user_id, task_id }: Props) => {
 
         try {
 
-            const response = await addSubTask({
+            const { data, error } = await supabase.from("sub_tasks").insert({
                 title: individualTask,
                 status: false,
-                user_id,
-                task_id,
-                current_tasks: state
-            })
+                parent_task: task_id,
+                user: user_id
+            }).select()
 
-            if (response) {
-                setIndividualTask("")
-                setPending(false)
-            }
+            const newState = [...state, { id: data[0].id, title: data[0].title, status: data[0].status, parent_task: data[0].parent_task, user: data[0].user }]
+
+            setIndividualTask("")
+            setState(newState)
+            setPending(false)
             
         } catch (error) {
             console.log(error);
@@ -73,16 +72,14 @@ const DashboardSubTasks = ({ state, setState, user_id, task_id }: Props) => {
         setState(newState)
 
         try {
-            const response = await updateSubTask({ 
-                sub_task_id: selected_id,
+            const { data, error } = await supabase.from("sub_tasks").update({ 
                 status: newStatus
-             })
+             }).eq( "id", selected_id ).select()
 
-             if (response) {
+             console.log(data);
+             
 
-                console.log(response);
-
-             }
+             
         } catch (error) {
 
             console.log(error);

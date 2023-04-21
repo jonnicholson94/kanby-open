@@ -1,9 +1,9 @@
 
 import { useState } from 'react'
 import Router from 'next/router'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 import { checkError } from '../lib/checkError'
-import { login } from '../lib/supabase/authFunctions'
 
 import AuthButton from "../elements/AuthButton"
 import AuthHeading from "../elements/AuthHeading"
@@ -11,12 +11,15 @@ import AuthInput from "../elements/AuthInput"
 import AuthLabel from "../elements/AuthLabel"
 import ErrorMessage from './ErrorMessage'
 
+
 const SignIn = ({ onClick }) => {
 
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [pending, setPending] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
+
+    const supabase = useSupabaseClient()
 
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
 
@@ -27,7 +30,7 @@ const SignIn = ({ onClick }) => {
 
         try {
 
-            const { data, error } = await login(email, password)
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
             if (error) {
                 setError(() => checkError(error.message))

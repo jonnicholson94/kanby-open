@@ -3,26 +3,22 @@ import { useState } from "react"
 import Head from "next/head"
 
 import useDispatchStatus from "../lib/hooks/useDispatchStatus"
-
-import { Status, Category, SubTask } from "../types/dataSchema"
-
-import { useSessionContext, useUser } from "@supabase/auth-helpers-react"
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs"
+import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useRouter } from "next/router"
 
-import { useAddNewTaskMutation } from "../features/apiSlice"
+import { Status, Category } from "../types/dataSchema"
 
 import DashboardContainer from "../components/DashboardContainer"
-import DashboardSubTasks from "../components/DashboardSubTasks"
 import DashboardTitle from "../components/DashboardTitle"
 import DashboardBackButton from "../elements/DashboardBackButton"
 import DashboardCategory from "../elements/DashboardCategory"
 import DashboardDateInput from "../elements/DashboardDateInput"
 import DashboardStatus from "../elements/DashboardStatus"
 import DashboardTextarea from "../elements/DashboardTextarea"
-import SplashScreen from "../components/SplashScreen"
 import DashboardHamburger from "../components/DashboardHamburger"
 
-const CreateTask = () => {
+const CreateTask = ({ user }) => {
 
     const [title, setTitle] = useState<string>("")
     const [description, setDescription] = useState<string>("")
@@ -35,20 +31,8 @@ const CreateTask = () => {
     const [show, setShow] = useState(null)
 
     const dispatchStatus = useDispatchStatus()
-
-    const { isLoading } = useSessionContext()
-    const user = useUser()
     const router = useRouter()
-
-    const [addNewTask] = useAddNewTaskMutation()
-
-    if (isLoading) {
-        return <SplashScreen />
-    }
-
-    if (!user) {
-        router.push("/")
-    }
+    const supabase = useSupabaseClient()
 
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
 
@@ -57,28 +41,28 @@ const CreateTask = () => {
         
             try {
             
-                const response = await addNewTask({
+                const { data, error } = await supabase.from("tasks").insert([
+                    {
                         user_id: user.id,
                         title: title,
                         description: description,
-                        status: status,
                         category: category,
                         due_date: date,
-                    }).unwrap()
-                
-                if (response === 200) {
-                    router.push("dashboard")
+                        status: status,
+                        comments: []
+                    }
+                ])
 
-                    dispatchStatus("Successfully created your task", "success")
-                 
-                }
-
-                if (response === 400) {
+                if (error) {
                     setPending(false)
 
-                    dispatchStatus("Failed to create your task", "error")
+                    return dispatchStatus("Failed to create your task", "error")
                     
                 } 
+                
+                router.push("dashboard")
+                dispatchStatus("Successfully created your task", "success")
+                
                
             } catch (error) {
                 dispatchStatus("Failed to create your task", "error")
@@ -116,3 +100,27 @@ const CreateTask = () => {
 }
 
 export default CreateTask
+
+export const getServerSideProps = async (ctx) => {
+
+    const supabase = createServerSupabaseClient(ctx)
+    
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+  
+    if (!session)
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
+  
+    return {
+      props: {
+        initialSession: session,
+        user: session.user
+      },
+    }
+  }

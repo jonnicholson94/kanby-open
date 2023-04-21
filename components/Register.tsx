@@ -1,8 +1,8 @@
 
 import { useState } from 'react'
 import Router from 'next/router'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
-import { signup } from '../lib/supabase/authFunctions'
 import { checkError } from '../lib/checkError'
 
 import { Auth } from '../types/auth'
@@ -25,6 +25,8 @@ const Register = ({ onClick }: Props) => {
     const [pending, setPending] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
 
+    const supabase = useSupabaseClient()
+
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
 
         e.preventDefault()
@@ -34,7 +36,7 @@ const Register = ({ onClick }: Props) => {
 
         try {
 
-            const { data, error } = await signup(email, password) 
+            const { data, error } = await supabase.auth.signUp({ email, password })
 
             if (error) {
                 setError(() => checkError(error.message))
